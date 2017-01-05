@@ -2,6 +2,7 @@ package ie.gmit.sw.example;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,8 +18,11 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 
 import ie.gmit.sw.jarcontainer.ClassHandler;
 import ie.gmit.sw.jarcontainer.Efferent;
@@ -34,6 +38,12 @@ public class ReflectionExample
    public static void main(String args[])throws FileNotFoundException, IOException, ClassNotFoundException 
    {
 	   
+	   // Column names for jtable
+	   String[] columnNames = {"Class Name",
+               				   "Efferent",
+				               "Afferent",
+				               "Instability"};
+	   
 	   if (args.length == 0) {
            System.out.println("Please specify a class name.");
            System.exit(1);
@@ -46,9 +56,9 @@ public class ReflectionExample
 	   JFrame frame = new JFrame();
 	   
 	   // Create panel for buttons and set colour
-	   JPanel jpanelButtons = new JPanel();
+	   /*JPanel jpanelButtons = new JPanel();
 	   jpanelButtons.setBackground(Color.blue);
-	   jpanelButtons.setLayout(new BoxLayout(jpanelButtons, BoxLayout.Y_AXIS));
+	   jpanelButtons.setLayout(new BoxLayout(jpanelButtons, BoxLayout.Y_AXIS));*/
 	   
 	   // Create panel for text area
 	   JPanel jpanelTextArea = new JPanel();
@@ -58,11 +68,6 @@ public class ReflectionExample
 	   JPanel jpanelTable = new JPanel();
 	   jpanelTable.setLayout(new BoxLayout(jpanelTable, BoxLayout.Y_AXIS));
 	   
-	   //  Create table
-	   JTable jtable = new JTable(10, 4);
-	   jpanelTable.add(jtable);
-	   
-	   
 	   // Create text area 
 	   JTextArea textArea = new JTextArea(10, 10);
 	   textArea.setEditable(false);  
@@ -71,14 +76,14 @@ public class ReflectionExample
 	   
 	   // Create button and add to panel
 	   JButton button = new JButton("Run");
-	   jpanelButtons.add(button);
+	   //jpanelButtons.add(button);
 	   
 	   // Add panel to frame
-	   frame.getContentPane().add(BorderLayout.NORTH, jpanelButtons);
+	   //frame.getContentPane().add(BorderLayout.NORTH, jpanelButtons);
 	   frame.getContentPane().add(BorderLayout.WEST, jpanelTextArea);
-	   frame.getContentPane().add(BorderLayout.CENTER, jpanelTable);
 	   
-	   frame.setSize(500, 500);
+	   
+	   frame.setSize(1000, 1000);
 	   frame.setVisible(true);
 	   
 	   //  ===============================
@@ -119,9 +124,37 @@ public class ReflectionExample
 	   
 	   List<Result> result = measure.getResult();
 	   
+	   // Initialise table array
+	   Object[][] tableData = new Object[result.size()][columnNames.length]; 
+	   
 	   for(int i = 0; i < result.size(); i++)
 	   {
 			Result instabilityResult = result.get(i);
+			
+			// Populate table array
+			for(int j = 0; j < 4; j++)
+			{
+				
+				switch(j)
+				{
+				
+					case 0: tableData[i][j] = instabilityResult.getCl().getSimpleName();
+					break;
+					
+					case 1: tableData[i][j] = instabilityResult.getCe();
+					break;
+					
+					case 2: tableData[i][j] = instabilityResult.getCa();
+					break;
+					
+					case 3: tableData[i][j] = instabilityResult.getI();
+					break;
+					
+					default:
+				
+				}// End switch 
+				
+			}// End inner for 
 			
 			//System.out.println("==> CLASS: " + in.getCl().getSimpleName() + " --> Ce=" + in.getCe() + ", Ca="
 					//+ in.getCa() + ", I=" + in.getI());
@@ -129,9 +162,49 @@ public class ReflectionExample
 
 			// Print out class names to GUI
 			textArea.append(instabilityResult.getCl().getSimpleName() + "\n");
-	   }
+			
+	   }// End outer for
+	   
+	   // ======================
+	   // Create table with data
+	   // ======================
+	   JTable jtable = new JTable(tableData, columnNames){
+		   
+		     public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+		    	
+		        Component comp = super.prepareRenderer(renderer, row, col);
+		        
+		        Object value = getModel().getValueAt(row, col);
+		   
+		        // Add colour to cells depending on their stability
+	            if (value.equals(Double.valueOf(1)) && col == 3)
+	            {
+	                comp.setBackground(Color.red);
+	                
+	            }
+	            else if(value.equals(Double.valueOf(0)) && col == 3)
+	            {
+	                comp.setBackground(Color.green);
+	                
+	            } else 
+	            {
+	                comp.setBackground(Color.white);
+	            }
+	            
+		        return comp;
+		        
+		    }// End prepareRenderer
+		};
+		
+	   jpanelTable.add(jtable);
+	   
+	   // ScrollPane
+	   JScrollPane scrollPane = new JScrollPane(jtable);
+	   jpanelTable.add(scrollPane);
+	   
+	   frame.getContentPane().add(BorderLayout.CENTER, jpanelTable);
 
-   }
+   }// End main
 
    public ReflectionExample(Class c){
       super();

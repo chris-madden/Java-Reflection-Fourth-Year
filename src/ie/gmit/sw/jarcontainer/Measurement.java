@@ -11,6 +11,7 @@ public class Measurement
 	private List<Result> result = new LinkedList<Result>();
 	private JarSet jarSet;
 	
+	// Receives a set of the classes in the jar file
 	public Measurement(JarSet jarSet) 
 	{
 		this.jarSet = jarSet;
@@ -19,6 +20,7 @@ public class Measurement
 	public void getCouplings()
 	{
 		
+		// Populate efferent list with efferent couplings 
 		for (int i = 0; i < this.jarSet.size(); i++)
 		{
 			
@@ -28,6 +30,7 @@ public class Measurement
 			
 		}
 		
+		// Populate afferent list with afferent couplings
 		for (int i = 0; i < this.jarSet.size(); i++)
 		{
 			
@@ -48,7 +51,7 @@ public class Measurement
 		
 		for(int i = 0; i < jarSet.size(); i++){
 			
-			Class cls = jarSet.get(i);
+			Class<?> cls = jarSet.get(i);
 			
 			ceScore = 0;	
 			caScore = 0;
@@ -58,8 +61,6 @@ public class Measurement
 			{
 				
 				Efferent efferent = this.listCE.get(j);
-				
-				
 				
 				if(cls.equals(efferent.getCls()))
 				{
@@ -79,8 +80,6 @@ public class Measurement
 				{
 					caScore = afferent.getResult();
 					
-					//System.out.println("Afferent Score: " + caScore);
-					
 					break;
 				}
 				
@@ -95,7 +94,6 @@ public class Measurement
 				instabiltiyScore = ceScore / (ceScore + caScore);
 			}
 				
-			
 			instabilityResult = new Result(cls, ceScore, caScore, instabiltiyScore);
 			
 			result.add(instabilityResult);
@@ -113,9 +111,10 @@ public class Measurement
 		return listCA;
 	}
 
+	// Result contains list with instability scores
 	public List<Result> getResult()
 	{
 		return result;
 	}
 
-}
+}// End class Measurement

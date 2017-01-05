@@ -6,7 +6,7 @@ import java.util.List;
 public class JarSet
 {
 	
-	List<Class> list = new LinkedList<Class>();
+	List<Class<?>> list = new LinkedList<Class<?>>();
 
 	public int size()
 	{
@@ -18,18 +18,19 @@ public class JarSet
 		return list.isEmpty();
 	}
 
-	public boolean contains(Class cls) 
+	public boolean contains(Class<?> cls) 
 	{
 		return list.contains(cls);
 	}
 
-	public boolean add(Class e) 
+	public boolean add(Class<?> e) 
 	{
 		return list.add(e);
 	}
 
-	public Class get(int index)
+	public Class<?> get(int index)
 	{
 		return list.get(index);
 	}
-}
+	
+}// End class JarSet

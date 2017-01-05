@@ -5,10 +5,10 @@ import java.util.List;
 public class Afferent {
 	
 	private JarSet jarsetDependencies;
-	private Class cls;
+	private Class<?> cls;
 	private List<Efferent> listCE; 
 
-	public Afferent(Class class1, List<Efferent> listCE)
+	public Afferent(Class<?> class1, List<Efferent> listCE)
 	{
 		
 		this.cls = class1;
@@ -46,16 +46,19 @@ public class Afferent {
 		
 	}
 
-	public JarSet getJarsetDependencies() {
+	public JarSet getJarsetDependencies() 
+	{
 		return jarsetDependencies;
 	}
 
-	public Class getCls() {
+	public Class<?> getCls()
+	{
 		return this.cls;
 	}
 	
-	public double getResult() {
+	public double getResult() 
+	{
 		return (double)this.jarsetDependencies.size();
 	}
 
-}
+}// End class SAfferent

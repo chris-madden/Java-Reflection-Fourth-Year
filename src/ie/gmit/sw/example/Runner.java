@@ -24,13 +24,13 @@ import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import ie.gmit.sw.jarcontainer.ClassHandler;
+import ie.gmit.sw.model.ClassHandler;
 import ie.gmit.sw.jarcontainer.Efferent;
 import ie.gmit.sw.jarcontainer.JarSet;
 import ie.gmit.sw.jarcontainer.Measurement;
 import ie.gmit.sw.jarcontainer.Result;
 
-public class ReflectionExample 
+public class Runner 
 {
 	
    private Class c;
@@ -95,7 +95,8 @@ public class ReflectionExample
 	   JarSet set = new JarSet();
 	   
 	   // Get classes from jar
-	   set = ch.getClasses(args[0]);
+	   // set will contain a list of classes that were in the jar
+	   set = ch.getClassesFromJar(args[0]);
 	   
         /*for (int i = 0; i < set.size(); i++) 
         {
@@ -206,7 +207,7 @@ public class ReflectionExample
 
    }// End main
 
-   public ReflectionExample(Class c){
+   public Runner(Class c){
       super();
       this.c = c;
 

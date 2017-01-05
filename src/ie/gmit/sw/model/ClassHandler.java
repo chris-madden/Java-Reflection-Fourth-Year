@@ -1,4 +1,4 @@
-package ie.gmit.sw.jarcontainer;
+package ie.gmit.sw.model;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,19 +8,18 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
-import ie.gmit.sw.example.ReflectionExample;
+import ie.gmit.sw.example.Runner;
+import ie.gmit.sw.jarcontainer.JarSet;
 
 public class ClassHandler
 {
 	
 	private JarSet list;
 	
-	public JarSet getClasses(String nameOfJar) throws FileNotFoundException, IOException
+	public JarSet getClassesFromJar(String nameOfJar) throws FileNotFoundException, IOException
 	{
 		
 		   // List with classes from Jar file
@@ -43,7 +42,7 @@ public class ClassHandler
 					if (!name.contains("$")) 
 						name.substring(0, name.length() - ".class".length()); 
 					
-					 Class queryClass;
+					 Class<?> queryClass;
 					 
 					try {
 						
@@ -51,7 +50,7 @@ public class ClassHandler
 						
 						list.add(queryClass);
 						 
-						new ReflectionExample(queryClass);
+						new Runner(queryClass);
 						
 					} catch (ClassNotFoundException e) {
 						e.printStackTrace();
@@ -66,18 +65,20 @@ public class ClassHandler
 			  
 		   }
 		
-		return list;
-		
-	}
+		   in.close();
+		   
+		   return list;
+		   
+	}// End getClassesFromJar
 
-	public JarSet getInterface(Class cls) 
+	public JarSet getInterface(Class<?> cls) 
 	{
 		
 		JarSet inFace = new JarSet();
 		
-		Class inFaceArray[] = cls.getInterfaces();
+		Class<?> inFaceArray[] = cls.getInterfaces();
 		
-		for(Class c : inFaceArray)
+		for(Class<?> c : inFaceArray)
 		{
 			inFace.add(c);
 		}
@@ -85,13 +86,13 @@ public class ClassHandler
 		return inFace;
 	}
 
-	public Class getSuperClass(Class cls, JarSet jarSetClasses) 
+	public Class<?> getSuperClass(Class<?> cls, JarSet jarSetClasses) 
 	{
 		
 		if(!cls.isInterface())
 		{
 			
-			Class class1 = cls.getSuperclass();
+			Class<?> class1 = cls.getSuperclass();
 			
 			for (int i = 0; i < jarSetClasses.size(); i++) 
 			{
@@ -107,9 +108,8 @@ public class ClassHandler
 		
 		return null;
 	}
-
 	
-	public JarSet getFields(Class cls, JarSet jarSetClasses)
+	public JarSet getFields(Class<?> cls, JarSet jarSetClasses)
 	{
 		JarSet jarsetFields = new JarSet();
 		
@@ -126,7 +126,7 @@ public class ClassHandler
 				if(type.getTypeName().equals(jarSetClasses.get(i).getName()))
 				{
 					
-					Class cField = jarSetClasses.get(i);
+					Class<?> cField = jarSetClasses.get(i);
 					
 					jarsetFields.add(cField);
 					
@@ -139,26 +139,25 @@ public class ClassHandler
 		return jarsetFields;
 	}
 
-	
-	public JarSet getConstructorParams(Class cls, JarSet jarSetClasses)
+	public JarSet getConstructorParams(Class<?> cls, JarSet jarSetClasses)
 	{
 		
 		JarSet jarsetParams = new JarSet();
 		
-		Constructor[] cons = cls.getDeclaredConstructors();
+		Constructor<?>[] cons = cls.getDeclaredConstructors();
 		
 		if(cons.length > 0)
 		{
 			
-			for (Constructor c : cons)
+			for (Constructor<?> c : cons)
 			{
 				
-				Class[] class1 = c.getParameterTypes();
+				Class<?>[] class1 = c.getParameterTypes();
 				
 				if(class1.length > 0)
 				{
 					
-					for (Class item : class1)
+					for (Class<?> item : class1)
 					{
 						
 						if(jarSetClasses.contains(item))
@@ -178,9 +177,8 @@ public class ClassHandler
 		
 		return jarsetParams;
 	}
-
 	
-	public JarSet getMethodParams(Class cls, JarSet jarSetClasses) 
+	public JarSet getMethodParams(Class<?> cls, JarSet jarSetClasses) 
 	{
 		
 		JarSet jarsetParams = new JarSet();
@@ -193,12 +191,12 @@ public class ClassHandler
 			for (Method m : method)
 			{
 				
-				Class[] class1 = m.getParameterTypes();
+				Class<?>[] class1 = m.getParameterTypes();
 				
 				if(class1.length > 0)
 				{
 					
-					for (Class item : class1)
+					for (Class<?> item : class1)
 					{
 						
 						if(jarSetClasses.contains(item))
@@ -219,7 +217,7 @@ public class ClassHandler
 		return jarsetParams;
 	}
 
-	public JarSet getMethodReturn(Class cls, JarSet jarSetClasses)
+	public JarSet getMethodReturn(Class<?> cls, JarSet jarSetClasses)
 	{
 		
 		JarSet jarsetReturn = new JarSet();
@@ -232,7 +230,7 @@ public class ClassHandler
 			for (Method m : method)
 			{
 				
-				Class class1 = m.getReturnType();
+				Class<?> class1 = m.getReturnType();
 				
 				if(jarSetClasses.contains(class1))
 				{
@@ -248,5 +246,4 @@ public class ClassHandler
 		return jarsetReturn;
 	}
 
-
-}
+}// End class handler

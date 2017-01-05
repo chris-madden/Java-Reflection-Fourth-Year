@@ -1,15 +1,16 @@
 package ie.gmit.sw.jarcontainer;
 
+import ie.gmit.sw.model.*;
+
 public class Efferent 
 {
 	
 	private JarSet jarSetDependencies;
 	private JarSet jarSetClasses;
-	private Class cls;
+	private Class<?> cls;
 	private ClassHandler ch = new ClassHandler();
 	
-
-	public Efferent(Class class1, JarSet jarSet) 
+	public Efferent(Class<?> class1, JarSet jarSet) 
 	{
 		
 		this.cls = class1;
@@ -36,7 +37,9 @@ public class Efferent
 			
 		}// End if
 		
-		Class superCls = ch.getSuperClass(this.cls, this.jarSetClasses);
+		// -----------------------------------------------------------------
+		// 						Get superclass
+		Class<?> superCls = ch.getSuperClass(this.cls, this.jarSetClasses);
 		
 		if(superCls != null)
 		{
@@ -44,23 +47,36 @@ public class Efferent
 			this.jarSetDependencies.add(superCls);
 			
 		}
+		// -----------------------------------------------------------------
 		
-	
+		// -----------------------------------------------------------------
+		//						Get Fields
 		JarSet jarSetFields = ch.getFields(this.cls, this.jarSetClasses);
 		filter(jarSetFields);
+		// -----------------------------------------------------------------
 		
+		// ---------------------------------------------------------------------------
+		// 						Get constructor parameters
 		JarSet jarsetConParam = ch.getConstructorParams(this.cls, this.jarSetClasses);
 		filter(jarsetConParam);
+		// ---------------------------------------------------------------------------
 		
+		// --------------------------------------------------------------------
+		// 						Get method parameters
 		JarSet methodParams = ch.getMethodParams(this.cls, this.jarSetClasses);
 		filter(methodParams);
+		// --------------------------------------------------------------------
 		
+		// --------------------------------------------------------------------
+		// 						Get method return type
 		JarSet methodReturn = ch.getMethodReturn(this.cls, this.jarSetClasses);
 		filter(methodReturn);
+		// --------------------------------------------------------------------
 
-	}
+	}// End calculate
 
-	public Class getCls() {
+	public Class<?> getCls() 
+	{
 		return cls;
 	}
 
@@ -100,4 +116,4 @@ public class Efferent
 		return (double)jarSetDependencies.size();
 	}
 		
-}
+}// End class Efferent

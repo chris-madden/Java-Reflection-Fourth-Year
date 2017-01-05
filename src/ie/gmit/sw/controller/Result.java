@@ -1,4 +1,4 @@
-package ie.gmit.sw.jarcontainer;
+package ie.gmit.sw.controller;
 
 public class Result 
 {

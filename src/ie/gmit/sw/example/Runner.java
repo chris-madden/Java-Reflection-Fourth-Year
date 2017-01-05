@@ -3,16 +3,10 @@ package ie.gmit.sw.example;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.*;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.jar.JarEntry;
-import java.util.jar.JarInputStream;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -22,13 +16,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-
 import ie.gmit.sw.model.ClassHandler;
-import ie.gmit.sw.jarcontainer.Efferent;
-import ie.gmit.sw.jarcontainer.JarSet;
-import ie.gmit.sw.jarcontainer.Measurement;
-import ie.gmit.sw.jarcontainer.Result;
+import ie.gmit.sw.controller.JarSet;
+import ie.gmit.sw.controller.Measurement;
+import ie.gmit.sw.controller.Result;
 
 public class Runner 
 {

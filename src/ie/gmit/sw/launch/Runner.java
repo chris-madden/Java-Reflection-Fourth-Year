@@ -1,4 +1,4 @@
-package ie.gmit.sw.example;
+package ie.gmit.sw.launch;
 
 import java.awt.BorderLayout;
 import java.awt.Color;

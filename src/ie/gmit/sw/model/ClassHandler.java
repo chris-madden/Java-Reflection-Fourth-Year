@@ -11,8 +11,8 @@ import java.lang.reflect.Type;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
-import ie.gmit.sw.example.Runner;
 import ie.gmit.sw.controller.JarSet;
+import ie.gmit.sw.launch.Runner;
 
 public class ClassHandler
 {

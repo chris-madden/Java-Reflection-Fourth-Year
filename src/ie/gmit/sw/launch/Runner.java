@@ -3,6 +3,8 @@ package ie.gmit.sw.launch;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.*;
@@ -25,6 +27,7 @@ public class Runner
 {
 	
    private Class c;
+   private static boolean start = false;
 	
    public static void main(String args[])throws FileNotFoundException, IOException, ClassNotFoundException 
    {
@@ -47,9 +50,9 @@ public class Runner
 	   JFrame frame = new JFrame();
 	   
 	   // Create panel for buttons and set colour
-	   /*JPanel jpanelButtons = new JPanel();
+	   JPanel jpanelButtons = new JPanel();
 	   jpanelButtons.setBackground(Color.blue);
-	   jpanelButtons.setLayout(new BoxLayout(jpanelButtons, BoxLayout.Y_AXIS));*/
+	   jpanelButtons.setLayout(new BoxLayout(jpanelButtons, BoxLayout.Y_AXIS));
 	   
 	   // Create panel for text area
 	   JPanel jpanelTextArea = new JPanel();
@@ -62,140 +65,149 @@ public class Runner
 	   // Create text area 
 	   JTextArea textArea = new JTextArea(10, 10);
 	   textArea.setEditable(false);  
-	   textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+	   //textArea.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 	   jpanelTextArea.add(textArea);
 	   
 	   // Create button and add to panel
 	   JButton button = new JButton("Run");
-	   //jpanelButtons.add(button);
+	   jpanelButtons.add(button);
 	   
 	   // Add panel to frame
-	   //frame.getContentPane().add(BorderLayout.NORTH, jpanelButtons);
+	   frame.getContentPane().add(BorderLayout.NORTH, jpanelButtons);
 	   frame.getContentPane().add(BorderLayout.WEST, jpanelTextArea);
 	   
 	   
-	   frame.setSize(1000, 1000);
+	   frame.setSize(1000, 500);
 	   frame.setVisible(true);
 	   
-	   //  ===============================
-	   //  Start application functionality
-	   //  ===============================
-	   
-	   ClassHandler ch = new ClassHandler();
-	   
-	   JarSet set = new JarSet();
-	   
-	   // Get classes from jar
-	   // set will contain a list of classes that were in the jar
-	   set = ch.getClassesFromJar(args[0]);
-	   
-        /*for (int i = 0; i < set.size(); i++) 
-        {
-        	
-        	System.out.println("Class" + set.get(i).getSimpleName());
-        	
-        	Efferent ce = new Efferent(set.get(i), set);
-        	
-        	for(int j = 0; j < ce.getJarSetDependencies().size(); j++)
-        	{
-        		
-        		System.out.println("\t\t\t\tShow me bitch " + ce.getJarSetDependencies().get(j).getSimpleName());
-        		
-        	}
-        	
-        	System.out.println("Number of dependencies is " + ce.getJarSetDependencies().size() );
-			
-		}*/
-	   
-	   // =======================================================================
-	   // Print out Efferent couplings, Afferent couplings and instability result
-	   // =======================================================================
-	   Measurement measure = new Measurement(set);
-	   measure.getCouplings();
-	   measure.calculateInstabilities();
-	   
-	   List<Result> result = measure.getResult();
-	   
-	   // Initialise table array
-	   Object[][] tableData = new Object[result.size()][columnNames.length]; 
-	   
-	   for(int i = 0; i < result.size(); i++)
-	   {
-			Result instabilityResult = result.get(i);
-			
-			// Populate table array
-			for(int j = 0; j < 4; j++)
+	   // Add action listener to button
+	   button.addActionListener(new ActionListener() {
+
+			// When button is clicked
+			public void actionPerformed(ActionEvent e)
 			{
 				
-				switch(j)
-				{
+				start = runJar();
 				
-					case 0: tableData[i][j] = instabilityResult.getCl().getSimpleName();
-					break;
-					
-					case 1: tableData[i][j] = instabilityResult.getCe();
-					break;
-					
-					case 2: tableData[i][j] = instabilityResult.getCa();
-					break;
-					
-					case 3: tableData[i][j] = instabilityResult.getI();
-					break;
-					
-					default:
+				System.out.println("Moved and still working");
 				
-				}// End switch 
+				//  ===============================
+			   //  Start application functionality
+			   //  ===============================
+			  
+				   ClassHandler ch = new ClassHandler();
+				   
+				   JarSet set = new JarSet();
+				   
+				   // Get classes from jar
+				   // set will contain a list of classes that were in the jar
+				   try {
+					set = ch.getClassesFromJar(args[0]);
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				   
+				   System.out.println("Set is: " + set);
 				
-			}// End inner for 
-			
-			//System.out.println("==> CLASS: " + in.getCl().getSimpleName() + " --> Ce=" + in.getCe() + ", Ca="
-					//+ in.getCa() + ", I=" + in.getI());
-			System.out.printf("| %14s|  %4.2f|  %4.2f|  %4.3f|\n", instabilityResult.getCl().getSimpleName(), instabilityResult.getCe(), instabilityResult.getCa(), instabilityResult.getI());
+				   // =======================================================================
+				   // Print out Efferent couplings, Afferent couplings and instability result
+				   // =======================================================================
+				   Measurement measure = new Measurement(set);
+				   measure.getCouplings();
+				   measure.calculateInstabilities();
+				   
+				   List<Result> result = measure.getResult();
+				   
+				   // Initialise table array
+				   Object[][] tableData = new Object[result.size()][columnNames.length]; 
+				   
+				   for(int i = 0; i < result.size(); i++)
+				   {
+						Result instabilityResult = result.get(i);
+						
+						// Populate table array
+						for(int j = 0; j < 4; j++)
+						{
+							
+							switch(j)
+							{
+							
+								case 0: tableData[i][j] = instabilityResult.getCl().getSimpleName();
+								break;
+								
+								case 1: tableData[i][j] = instabilityResult.getCe();
+								break;
+								
+								case 2: tableData[i][j] = instabilityResult.getCa();
+								break;
+								
+								case 3: tableData[i][j] = instabilityResult.getI();
+								break;
+								
+								default:
+							
+							}// End switch 
+							
+						}// End inner for 
+						
+						//System.out.println("==> CLASS: " + in.getCl().getSimpleName() + " --> Ce=" + in.getCe() + ", Ca="
+								//+ in.getCa() + ", I=" + in.getI());
+						System.out.printf("| %14s|  %4.2f|  %4.2f|  %4.3f|\n", instabilityResult.getCl().getSimpleName(), instabilityResult.getCe(), instabilityResult.getCa(), instabilityResult.getI());
 
-			// Print out class names to GUI
-			textArea.append(instabilityResult.getCl().getSimpleName() + "\n");
-			
-	   }// End outer for
+						// Print out class names to GUI
+						textArea.append(instabilityResult.getCl().getSimpleName() + "\n");
+						
+				   }// End outer for
+				
+				   // ======================
+				   // Create table with data
+				   // ======================
+				   JTable jtable = new JTable(tableData, columnNames){
+					   
+					     public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+					    	
+					        Component comp = super.prepareRenderer(renderer, row, col);
+					        
+					        Object value = getModel().getValueAt(row, col);
+					   
+					        // Add colour to cells depending on their stability
+				            if (value.equals(Double.valueOf(1)) && col == 3)
+				            {
+				                comp.setBackground(Color.red);
+				                
+				            }
+				            else if(value.equals(Double.valueOf(0)) && col == 3)
+				            {
+				                comp.setBackground(Color.green);
+				                
+				            } else 
+				            {
+				                comp.setBackground(Color.white);
+				            }
+				            
+					        return comp;
+					        
+					    }// End prepareRenderer
+					};
+					
+				   jpanelTable.add(jtable);
+				   
+				   // ScrollPane
+				   JScrollPane scrollPane = new JScrollPane(jtable);
+				   jpanelTable.add(scrollPane);
+				   
+				   frame.getContentPane().add(BorderLayout.CENTER, jpanelTable);
+				
+			}
+		    
+       });
 	   
-	   // ======================
-	   // Create table with data
-	   // ======================
-	   JTable jtable = new JTable(tableData, columnNames){
+	   
 		   
-		     public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
-		    	
-		        Component comp = super.prepareRenderer(renderer, row, col);
-		        
-		        Object value = getModel().getValueAt(row, col);
-		   
-		        // Add colour to cells depending on their stability
-	            if (value.equals(Double.valueOf(1)) && col == 3)
-	            {
-	                comp.setBackground(Color.red);
-	                
-	            }
-	            else if(value.equals(Double.valueOf(0)) && col == 3)
-	            {
-	                comp.setBackground(Color.green);
-	                
-	            } else 
-	            {
-	                comp.setBackground(Color.white);
-	            }
-	            
-		        return comp;
-		        
-		    }// End prepareRenderer
-		};
-		
-	   jpanelTable.add(jtable);
-	   
-	   // ScrollPane
-	   JScrollPane scrollPane = new JScrollPane(jtable);
-	   jpanelTable.add(scrollPane);
-	   
-	   frame.getContentPane().add(BorderLayout.CENTER, jpanelTable);
-
    }// End main
 
    public Runner(Class c){
@@ -208,7 +220,7 @@ public class Runner
       createArray();*/
    }
 
-   public void printConstructors(){
+/*   public void printConstructors(){
       Constructor ctorlist[] = c.getDeclaredConstructors();
       System.out.println("--------------" + ctorlist.length + " Constructors --------------");
       for (int i = 0; i < ctorlist.length; i++) {
@@ -272,5 +284,31 @@ public class Runner
       }catch (Throwable e) {
          System.err.println(e);
       }
+   }*/
+   
+   /*for (int i = 0; i < set.size(); i++) 
+   {
+   	
+   	System.out.println("Class" + set.get(i).getSimpleName());
+   	
+   	Efferent ce = new Efferent(set.get(i), set);
+   	
+   	for(int j = 0; j < ce.getJarSetDependencies().size(); j++)
+   	{
+   		
+   		System.out.println("\t\t\t\tShow me bitch " + ce.getJarSetDependencies().get(j).getSimpleName());
+   		
+   	}
+   	
+   	System.out.println("Number of dependencies is " + ce.getJarSetDependencies().size() );
+		
+	}*/
+   
+   public static boolean runJar()
+   {
+	   
+	   return true;
+	   
    }
-}
+   
+}// End class Runner

@@ -7,9 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.*;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -102,13 +100,19 @@ public class Runner
 				   // Get classes from jar
 				   // set will contain a list of classes that were in the jar
 				   try {
+					   
 					set = ch.getClassesFromJar(args[0]);
+					
 				} catch (FileNotFoundException e1) {
+					
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					
 				} catch (IOException e1) {
+					
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
+					
 				}
 				   
 				   System.out.println("Set is: " + set);
@@ -156,6 +160,7 @@ public class Runner
 						
 						//System.out.println("==> CLASS: " + in.getCl().getSimpleName() + " --> Ce=" + in.getCe() + ", Ca="
 								//+ in.getCa() + ", I=" + in.getI());
+						
 						System.out.printf("| %14s|  %4.2f|  %4.2f|  %4.3f|\n", instabilityResult.getCl().getSimpleName(), instabilityResult.getCe(), instabilityResult.getCa(), instabilityResult.getI());
 
 						// Print out class names to GUI
@@ -206,8 +211,6 @@ public class Runner
 		    
        });
 	   
-	   
-		   
    }// End main
 
    public Runner(Class c){

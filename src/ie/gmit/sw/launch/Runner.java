@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,10 +17,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.table.TableCellRenderer;
-import ie.gmit.sw.model.ClassHandler;
+
+import com.db4o.Db4oEmbedded;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+
 import ie.gmit.sw.controller.JarSet;
 import ie.gmit.sw.controller.Measurement;
 import ie.gmit.sw.controller.Result;
+import ie.gmit.sw.model.ClassHandler;
+import ie.gmit.sw.model.DatabaseRecord;
 
 public class Runner 
 {
@@ -40,6 +47,8 @@ public class Runner
            System.out.println("Please specify a class name.");
            System.exit(1);
        }
+	   
+	   
 	   
 	   //  ===
 	   //  GUI
@@ -209,7 +218,27 @@ public class Runner
 				
 			}
 		    
-       });
+       }); // End button.addActionListener
+	   
+	   // open the database file if it exists. 
+	   // If not then create a file called database
+	   ObjectContainer db = Db4oEmbedded.openFile("db");
+	   
+	  /* // Create new record
+	   DatabaseRecord dbRecord = new DatabaseRecord("Test_2", 15, 5, 5, 5);
+	   
+	   // Save to database
+	   db.store(dbRecord);*/
+	   
+	   // Retrieve record from database
+	   ObjectSet<DatabaseRecord> record = db.query(DatabaseRecord.class);
+	   
+	   for(DatabaseRecord item : record)
+	   {
+			System.out.println("Database records => \nJar Name: " + item.getNameOfJar() + ",\nNumber of classes "
+					 + item.getNumOfClasses() + ", \n Num. of Stable: " + item.getFullStability() + ",\nNum. fo Instalbe"
+					 + item.getFullUnstability() + ",\nNum. of Others: " + item.getInbetweenStabilty());
+		}
 	   
    }// End main
 

@@ -27,6 +27,7 @@ import ie.gmit.sw.controller.Measurement;
 import ie.gmit.sw.controller.Result;
 import ie.gmit.sw.model.ClassHandler;
 import ie.gmit.sw.model.DatabaseRecord;
+import ie.gmit.sw.view.UserView;
 
 public class Runner 
 {
@@ -37,18 +38,30 @@ public class Runner
    public static void main(String args[])throws FileNotFoundException, IOException, ClassNotFoundException 
    {
 	   
-	   // Column names for jtable
+	   /*// Column names for jtable
 	   String[] columnNames = {"Class Name",
                				   "Efferent",
 				               "Afferent",
-				               "Instability"};
+				               "Instability"};*/
 	   
 	   if (args.length == 0) {
            System.out.println("Please specify a class name.");
            System.exit(1);
        }
 	   
-	   //  ===
+	   // ========================
+	   // Build the user interface
+	   // ========================
+	   
+	   UserView ui = new UserView();
+	   
+	   // builds the outer shell 
+	   ui.buildInterfaceShell();
+	   
+	   // when run button is pressed the table fields are populated
+	   ui.runButton();
+	   
+	  /* //  ===
 	   //  GUI
 	   //  ===
 	   
@@ -83,9 +96,9 @@ public class Runner
 	   
 	   
 	   frame.setSize(1000, 500);
-	   frame.setVisible(true);
+	   frame.setVisible(true);*/
 	   
-	   // Add action listener to button
+	  /* // Add action listener to button
 	   button.addActionListener(new ActionListener() {
 
 			// When button is clicked
@@ -217,7 +230,7 @@ public class Runner
 			}
 		    
        }); // End button.addActionListener
-	   
+*/	   
 	   // open the database file if it exists. 
 	   // If not then create a file called database
 	   ObjectContainer db = Db4oEmbedded.openFile("db");

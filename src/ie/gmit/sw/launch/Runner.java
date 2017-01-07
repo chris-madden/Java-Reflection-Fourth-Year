@@ -48,8 +48,6 @@ public class Runner
            System.exit(1);
        }
 	   
-	   
-	   
 	   //  ===
 	   //  GUI
 	   //  ===

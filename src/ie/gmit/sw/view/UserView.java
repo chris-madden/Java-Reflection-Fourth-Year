@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import ie.gmit.sw.controller.JarSet;
@@ -23,7 +24,6 @@ import ie.gmit.sw.controller.Result;
 public class UserView
 {
 	
-	// Column names for jtable
 	private String[] columnNames = {"Class Name","Efferent","Afferent", "Instability"};
 	private Object[][] tableData;
 	private List<Result> result;
@@ -34,6 +34,7 @@ public class UserView
 	private JButton runButton;
 	private JTable jtable;
 	private JScrollPane scrollPane;
+	private DefaultTableModel model; //= new DefaultTableModel(colNames, 0);
 	
 	private JarSet jarSet;
 	
@@ -65,7 +66,6 @@ public class UserView
 		// ======================================
 		
 	    jpanelButtons = new JPanel();
-	    jpanelButtons.setBackground(Color.blue);
 	    jpanelButtons.setLayout(new BoxLayout(jpanelButtons, BoxLayout.Y_AXIS));
 	   
 	    // ==========================
@@ -96,12 +96,15 @@ public class UserView
 		jpanelButtons.add(runButton);
 		
 		// =============
-		// Create jtable
+		// Create JTable
 		// =============
+		model = new DefaultTableModel(columnNames, 0);
 		
-		jtable = new JTable(tableData, columnNames){
+		jtable = new JTable(model){
 			   
-		     public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+			private static final long serialVersionUID = 3344805599300020343L;
+
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
 		    	
 		        Component comp = super.prepareRenderer(renderer, row, col);
 		        
@@ -125,6 +128,7 @@ public class UserView
 		        return comp;
 		        
 		    }// End prepareRenderer
+			
 		};
 		jpanelTable.add(jtable);
 		
@@ -152,58 +156,47 @@ public class UserView
 		
 	}// End method buildInterface
 	
-	/*public void runButtonPress()
+	// Populate the JTable when clicking run button
+	public void runButtonPress()
 	{
 		
 		// When run button is pressed
 		runButton.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
+
+			public void actionPerformed(ActionEvent e)
+			{
 				
-				System.out.println("Run button pressed");
+				// Create object array with the length of 4
+				Object[] row = new Object[columnNames.length];
 				
-				jtable = new JTable(tableData, columnNames){
-					   
-				     public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
-				    	
-				        Component comp = super.prepareRenderer(renderer, row, col);
-				        
-				        Object value = getModel().getValueAt(row, col);
-				   
-				        // Add colour to cells depending on their stability
-			            if (value.equals(Double.valueOf(1)) && col == 3)
-			            {
-			                comp.setBackground(Color.red);
-			                
-			            }
-			            else if(value.equals(Double.valueOf(0)) && col == 3)
-			            {
-			                comp.setBackground(Color.green);
-			                
-			            } else 
-			            {
-			                comp.setBackground(Color.white);
-			            }
-			            
-				        return comp;
-				        
-				    }// End prepareRenderer
-				};
+				// Loop through table data array
+				for(int i = 0; i < tableData.length; i++)
+				{
+					
+					for(int j = 0; j < columnNames.length; j++)
+					{
+						
+						// Store a row from table data into a single dimension array
+						row[j] = tableData[i][j];
+						
+					}// End inner for
+					
+					// Add row to table
+					model.addRow(row);
+					
+				}// End outer array
 				
-			   jpanelTable.add(jtable);
-			   
-			   // ScrollPane
-			   scrollPane = new JScrollPane(jtable);
-			   jpanelTable.add(scrollPane);
-			   
-			   frame.getContentPane().add(BorderLayout.CENTER, jpanelTable);
-			 
-			 }// End actionPerformed
+			}// End method actionPerformed
 			
 		});// End addActionListener
 		
 	}// End method runButton
-*/	
+	
+	
+	// ==============
+	// Helper methods
+	// ==============
+	
 	// Calculates dependencies within the jarset and returns a list of results
 	private List<Result> getResultList(JarSet js)
 	{
@@ -251,8 +244,6 @@ public class UserView
 					default:
 				
 				}// End switch 
-				
-				System.out.println(tableData[i][j]);
 				
 			}// End inner for 
 		   

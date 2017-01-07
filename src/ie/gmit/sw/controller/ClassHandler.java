@@ -42,7 +42,7 @@ public class ClassHandler
 					if (!name.contains("$")) 
 						name.substring(0, name.length() - ".class".length()); 
 					
-					 Class<?> queryClass;
+					Class<?> queryClass;
 					 
 					try {
 						

@@ -1,7 +1,6 @@
 package ie.gmit.sw.controller;
 
 import ie.gmit.sw.controller.JarSet;
-import ie.gmit.sw.model.*;
 
 public class Efferent 
 {

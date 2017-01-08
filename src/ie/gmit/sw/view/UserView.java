@@ -3,6 +3,8 @@ package ie.gmit.sw.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -17,32 +19,42 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import com.db4o.ObjectSet;
+
 import ie.gmit.sw.controller.ClassSet;
+import ie.gmit.sw.controller.DatabaseOperations;
 import ie.gmit.sw.controller.Measurement;
 import ie.gmit.sw.controller.Result;
+import ie.gmit.sw.model.DatabaseRecord;
 
 public class UserView
 {
 	
 	private String[] columnNames = {"Class Name","Efferent","Afferent", "Instability"};
+	private String[] dbColumnNames = {"Jar Name", "No. of Classes", "No. of Stable", "No. of Unstable", "No. of Inbetween"};
 	private Object[][] tableData;
 	private List<Result> result;
+	private DatabaseOperations dop;
 	
 	private JFrame frame;
 	private JPanel jpanelButtons, jpanelTextArea, jpanelTable;
 	private JTextArea textArea;
-	private JButton runButton;
-	private JTable jtable;
-	private JScrollPane scrollPane;
-	private DefaultTableModel model; //= new DefaultTableModel(colNames, 0);
+	private JButton runButton, loadDbButton;
+	private JTable jtable, databaseTable;
+	private JScrollPane scrollPane, scrollPaneDB;
+	private DefaultTableModel model, dbModel; 
+	private Label jarLabel, dbLabel;
 	
 	private ClassSet ClassSet;
 	
-	public UserView(ClassSet ClassSetClasses) 
+	public UserView(ClassSet ClassSetClasses, DatabaseOperations dop) 
 	{
 		
 		// Initialize UI ClassSet
 		this.ClassSet = ClassSetClasses;
+		
+		// Initialize opened database 
+		this.dop = dop;
 		
 		// will return list of results of dependencies for each class in jar file
 		result = getResultList(ClassSet);
@@ -61,12 +73,12 @@ public class UserView
 		
 		frame = new JFrame("Dependency Checker");
 		
-		// ======================================
-	    // Create panel for buttons and set color
-		// ======================================
+		// ========================
+	    // Create panel for buttons 
+		// ========================
 		
 	    jpanelButtons = new JPanel();
-	    jpanelButtons.setLayout(new BoxLayout(jpanelButtons, BoxLayout.Y_AXIS));
+	    jpanelButtons.setLayout(new BoxLayout(jpanelButtons, BoxLayout.X_AXIS));
 	   
 	    // ==========================
 	 	// Create panel for text area
@@ -85,15 +97,32 @@ public class UserView
 		// ================
 		// Create text area
 		// ================
-	    textArea = new JTextArea(10, 10);
+	    /*textArea = new JTextArea(10, 10);
 	    textArea.setEditable(false);  
-	    jpanelTextArea.add(textArea);
+	    jpanelTextArea.add(textArea);*/
 	   
-	    // ==============================
-	    // Create button and add to panel
-	    // ==============================
+	    // ==================================
+	    // Create run button and add to panel
+	    // =================================
 	    runButton = new JButton("Run");
 		jpanelButtons.add(runButton);
+		
+		// ======================================
+	    // Create load DB button and add to panel
+	    // ======================================
+	    loadDbButton = new JButton("Load DB");
+		jpanelButtons.add(loadDbButton);
+		
+		// ============================
+		// Create jar information Label
+		// ============================
+		
+		jarLabel = new Label();
+		jarLabel.setText("Jar Information");
+		jarLabel.setAlignment(Label.CENTER);
+		jarLabel.setBackground(Color.gray);
+		jarLabel.setForeground(Color.white);
+		jpanelTable.add(jarLabel);
 		
 		// =============
 		// Create JTable
@@ -139,19 +168,45 @@ public class UserView
 		scrollPane = new JScrollPane(jtable);
 		jpanelTable.add(scrollPane);
 		
+		// ===============
+		// Create DB Label
+		// ===============
+		
+		dbLabel = new Label();
+		dbLabel.setText("Database Information");
+		dbLabel.setAlignment(Label.CENTER);
+		dbLabel.setBackground(Color.gray);
+		dbLabel.setForeground(Color.white);
+		jpanelTable.add(dbLabel);
+		
+		// ==============
+		// Create dbTable
+		// ==============
+		
+		dbModel = new DefaultTableModel(dbColumnNames, 0);
+		databaseTable = new JTable(dbModel);
+		jpanelTable.add(databaseTable);
+		
+		// ================================
+		// Add ScrollPane to database table
+		// ================================
+		
+		scrollPaneDB = new JScrollPane(databaseTable);
+		jpanelTable.add(scrollPaneDB);
+		
 		// ===================
 		// Add panels to frame
 		// ===================
 		
 	    frame.getContentPane().add(BorderLayout.NORTH, jpanelButtons);
-	    frame.getContentPane().add(BorderLayout.WEST, jpanelTextArea);
+	    //frame.getContentPane().add(BorderLayout.WEST, jpanelTextArea);
 	    frame.getContentPane().add(BorderLayout.CENTER, jpanelTable);
 	    
 	    // =============================
 	    // Set frame size and visibility
 	    // =============================
 	    
-	    frame.setSize(1000, 500);
+	    frame.setSize(1000, 750);
 	    frame.setVisible(true);
 		
 	}// End method buildInterface
@@ -192,6 +247,42 @@ public class UserView
 		
 	}// End method runButton
 	
+	// Populate database table
+	public void loadDbButton()
+	{
+		
+		loadDbButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				ObjectSet<DatabaseRecord> record = dop.retrieveAll();
+				
+				// Create object array with the length of 4
+				Object[] row = new Object[dbColumnNames.length];
+				
+				for(DatabaseRecord item : record)
+				{
+					
+					Object tableItem0 = item.getNameOfJar();
+					row[0] = tableItem0;
+					Object tableItem1 = item.getNumOfClasses();
+					row[1] = tableItem1;
+					Object tableItem2 = item.getFullStability();
+					row[2] = tableItem2;
+					Object tableItem3 = item.getFullUnstability();
+					row[3] = tableItem3;
+					Object tableItem4 = item.getInbetweenStabilty();
+					row[4] = tableItem4;
+					
+					dbModel.addRow(row);
+				
+				}// End inner for
+				
+			}// End method actionPerformed
+			
+		});// End loadDbButton.addActionListener
+		
+	}// End method loadDbButton()
 	
 	// ==============
 	// Helper methods

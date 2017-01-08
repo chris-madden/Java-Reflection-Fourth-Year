@@ -11,9 +11,9 @@ public class DatabaseRecord
 	private int fullUnstability;
 	private int inbetweenStabilty;
 	
-	//  =====================================================
+	//  ========================================================
 	//  This constructor will represent 1 record in the database
-	//  =====================================================
+	//  ========================================================
 	public DatabaseRecord(String nameOfJar, int numOfClasses, int fullStability, int fullUnstability, int inbetweenStabilty)
 	{
 		

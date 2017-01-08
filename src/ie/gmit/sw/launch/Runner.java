@@ -2,7 +2,9 @@ package ie.gmit.sw.launch;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 import ie.gmit.sw.controller.ClassSet;
+import ie.gmit.sw.controller.DatabaseOperations;
 import ie.gmit.sw.controller.LoadJarClasses;
 import ie.gmit.sw.controller.Loadable;
 import ie.gmit.sw.view.UserView;
@@ -52,11 +54,21 @@ public class Runner
 	   }// End try catch
 	   
 	   // ===========================
-	   // 2. Build the user interface
+	   // 2. Open database connection
 	   // ===========================
 	   
-	   // Pass set of classes to UserView
-	   UserView ui = new UserView(setOfClasses);
+	   // open the database file if it exists. 
+	   // If not then create a file called database
+	   
+	   DatabaseOperations dop = new DatabaseOperations();
+	   dop.openDB();
+	   
+	   // ===========================
+	   // 3. Build the user interface
+	   // ===========================
+	   
+	   // Pass set of classes to UserView and the opbject for the database
+	   UserView ui = new UserView(setOfClasses, dop);
 	   
 	   // builds the outer shell 
 	   ui.buildInterfaceShell();
@@ -64,29 +76,18 @@ public class Runner
 	   // when run button is pressed the table fields are populated
 	   ui.runButtonPress();
 	   
+	   // When button is pressed all records are loaded
+	   ui.loadDbButton();
+	   
 	   // ====================
 	   // Simple Database Code
 	   // ====================
-   
-	  /* // open the database file if it exists. 
-	   // If not then create a file called database
-	   ObjectContainer db = Db4oEmbedded.openFile("db");
 	   
 	   // Create new record
-	   DatabaseRecord dbRecord = new DatabaseRecord("Test_2", 15, 5, 5, 5);
+	   //DatabaseRecord dbRecord = new DatabaseRecord("Test_2", 15, 5, 5, 5);
 	   
 	   // Save to database
-	   db.store(dbRecord);
-	   
-	   // Retrieve record from database
-	   ObjectSet<DatabaseRecord> record = db.query(DatabaseRecord.class);
-	   
-	   for(DatabaseRecord item : record)
-	   {
-			System.out.println("Database records => \nJar Name: " + item.getNameOfJar() + ",\nNumber of classes "
-					 + item.getNumOfClasses() + ", \n Num. of Stable: " + item.getFullStability() + ",\nNum. fo Instalbe"
-					 + item.getFullUnstability() + ",\nNum. of Others: " + item.getInbetweenStabilty());
-		}*/
+	   //db.store(dbRecord);
 	   
    }// End main
    

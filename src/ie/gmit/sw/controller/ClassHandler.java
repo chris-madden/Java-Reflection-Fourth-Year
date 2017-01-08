@@ -17,9 +17,9 @@ import ie.gmit.sw.launch.Runner;
 public class ClassHandler
 {
 	
-	private JarSet list;
+	//private JarSet list;
 	
-	public JarSet getClassesFromJar(String nameOfJar) throws FileNotFoundException, IOException
+	/*public JarSet getClassesFromJar(String nameOfJar) throws FileNotFoundException, IOException
 	{
 		
 		   // List with classes from Jar file
@@ -70,7 +70,7 @@ public class ClassHandler
 		   return list;
 		   
 	}// End getClassesFromJar
-
+*/
 	public JarSet getInterface(Class<?> cls) 
 	{
 		

@@ -3,7 +3,8 @@ package ie.gmit.sw.launch;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import ie.gmit.sw.controller.JarSet;
-import ie.gmit.sw.controller.ClassHandler;
+import ie.gmit.sw.controller.LoadJarClasses;
+import ie.gmit.sw.controller.Loadable;
 import ie.gmit.sw.view.UserView;
 
 public class Runner 
@@ -18,7 +19,7 @@ public class Runner
 
    }
 
-   public static void main(String args[])throws FileNotFoundException, IOException, ClassNotFoundException 
+   public static void main(String args[])throws ClassNotFoundException 
    {
 	   
 	   if (args.length == 0) {
@@ -30,22 +31,23 @@ public class Runner
 	   // 1. Load Classes from jar
 	   // ========================
 	   
-	   ClassHandler ch = new ClassHandler();
+	   // Program to an abstraction
+	   Loadable loadClasses = new LoadJarClasses();
 	   
-	   JarSet set = new JarSet();
+	   JarSet setOfClasses = new JarSet();
 	   
 	   try {
-		   
+		     
 		   // Read classes from jar file
-		   set = ch.getClassesFromJar(args[0]);
+		   setOfClasses = loadClasses.load(args[0]);
 		   
-	   } catch (FileNotFoundException e1) {
+	   } catch (FileNotFoundException e) {
 		
-			e1.printStackTrace();
+			e.printStackTrace();
 		
-	   } catch (IOException e1) {
+	   } catch (IOException e) {
 		
-			e1.printStackTrace();
+			e.printStackTrace();
 		
 	   }// End try catch
 	   
@@ -54,7 +56,7 @@ public class Runner
 	   // ===========================
 	   
 	   // Pass set of classes to UserView
-	   UserView ui = new UserView(set);
+	   UserView ui = new UserView(setOfClasses);
 	   
 	   // builds the outer shell 
 	   ui.buildInterfaceShell();

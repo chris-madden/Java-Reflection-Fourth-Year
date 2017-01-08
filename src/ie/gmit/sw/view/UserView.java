@@ -17,7 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import ie.gmit.sw.controller.JarSet;
+import ie.gmit.sw.controller.ClassSet;
 import ie.gmit.sw.controller.Measurement;
 import ie.gmit.sw.controller.Result;
 
@@ -36,16 +36,16 @@ public class UserView
 	private JScrollPane scrollPane;
 	private DefaultTableModel model; //= new DefaultTableModel(colNames, 0);
 	
-	private JarSet jarSet;
+	private ClassSet ClassSet;
 	
-	public UserView(JarSet jarSetClasses) 
+	public UserView(ClassSet ClassSetClasses) 
 	{
 		
-		// Initialize UI JarSet
-		this.jarSet = jarSetClasses;
+		// Initialize UI ClassSet
+		this.ClassSet = ClassSetClasses;
 		
 		// will return list of results of dependencies for each class in jar file
-		result = getResultList(jarSet);
+		result = getResultList(ClassSet);
 		
 		// Populate table array
 		populateTableArray();
@@ -197,8 +197,8 @@ public class UserView
 	// Helper methods
 	// ==============
 	
-	// Calculates dependencies within the jarset and returns a list of results
-	private List<Result> getResultList(JarSet js)
+	// Calculates dependencies within the ClassSet and returns a list of results
+	private List<Result> getResultList(ClassSet js)
 	{
 		
 		Measurement measure = new Measurement(js);

@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Afferent {
 	
-	private JarSet jarsetDependencies;
+	private ClassSet jarsetDependencies;
 	private Class<?> cls;
 	private List<Efferent> listCE; 
 
@@ -20,11 +20,11 @@ public class Afferent {
 	public void calculate()
 	{
 		
-		this.jarsetDependencies = new JarSet();
+		this.jarsetDependencies = new ClassSet();
 		
 		for (int i = 0; i < listCE.size(); i++)
 		{
-			JarSet jarSetD = listCE.get(i).getJarSetDependencies();
+			ClassSet jarSetD = listCE.get(i).getJarSetDependencies();
 			
 			if(jarSetD.size() > 0)
 			{
@@ -46,7 +46,7 @@ public class Afferent {
 		
 	}
 
-	public JarSet getJarsetDependencies() 
+	public ClassSet getJarsetDependencies() 
 	{
 		return jarsetDependencies;
 	}

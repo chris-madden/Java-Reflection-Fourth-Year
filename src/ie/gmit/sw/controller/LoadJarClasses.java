@@ -9,16 +9,23 @@ import java.util.jar.JarInputStream;
 
 import ie.gmit.sw.launch.Runner;
 
+/*
+ * 
+ *  This particular concrete class is part of the strategy pattern and is used to load classes 
+ *  from a jar file
+ * 
+ */
+
 public class LoadJarClasses implements Loadable 
 {
 	
-	private JarSet list;
+	private ClassSet list;
 
-	public JarSet load(String nameOfJar) throws FileNotFoundException, IOException 
+	public ClassSet load(String nameOfJar) throws FileNotFoundException, IOException 
 	{
 		
 		// List with classes from Jar file
-		   this.list = new JarSet();
+		   this.list = new ClassSet();
 		   
 		   JarInputStream in  = new JarInputStream(new FileInputStream(new File(nameOfJar))); 
 			

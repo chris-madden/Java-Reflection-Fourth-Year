@@ -3,7 +3,7 @@ package ie.gmit.sw.controller;
 import java.util.LinkedList;
 import java.util.List;
 
-public class JarSet
+public class ClassSet
 {
 	
 	List<Class<?>> list = new LinkedList<Class<?>>();

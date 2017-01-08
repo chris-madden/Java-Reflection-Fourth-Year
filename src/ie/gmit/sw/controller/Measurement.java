@@ -9,10 +9,10 @@ public class Measurement
 	private List<Efferent> listCE = new LinkedList<Efferent>();
 	private List<Afferent> listCA = new LinkedList<Afferent>();
 	private List<Result> result = new LinkedList<Result>();
-	private JarSet jarSet;
+	private ClassSet jarSet;
 	
 	// Receives a set of the classes in the jar file
-	public Measurement(JarSet jarSet) 
+	public Measurement(ClassSet jarSet) 
 	{
 		this.jarSet = jarSet;
 	}

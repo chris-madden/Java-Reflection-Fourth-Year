@@ -1,16 +1,16 @@
 package ie.gmit.sw.controller;
 
-import ie.gmit.sw.controller.JarSet;
+import ie.gmit.sw.controller.ClassSet;
 
 public class Efferent 
 {
 	
-	private JarSet jarSetDependencies;
-	private JarSet jarSetClasses;
+	private ClassSet jarSetDependencies;
+	private ClassSet jarSetClasses;
 	private Class<?> cls;
 	private ClassHandler ch = new ClassHandler();
 	
-	public Efferent(Class<?> class1, JarSet jarSet) 
+	public Efferent(Class<?> class1, ClassSet jarSet) 
 	{
 		
 		this.cls = class1;
@@ -23,9 +23,9 @@ public class Efferent
 	public void calculate()
 	{
 		
-		this.jarSetDependencies = new JarSet();
+		this.jarSetDependencies = new ClassSet();
 		
-		JarSet inFace = ch.getInterface(this.cls);
+		ClassSet inFace = ch.getInterface(this.cls);
 		
 		if(inFace.size() > 0){
 			
@@ -51,25 +51,25 @@ public class Efferent
 		
 		// -----------------------------------------------------------------
 		//						Get Fields
-		JarSet jarSetFields = ch.getFields(this.cls, this.jarSetClasses);
+		ClassSet jarSetFields = ch.getFields(this.cls, this.jarSetClasses);
 		filter(jarSetFields);
 		// -----------------------------------------------------------------
 		
 		// ---------------------------------------------------------------------------
 		// 						Get constructor parameters
-		JarSet jarsetConParam = ch.getConstructorParams(this.cls, this.jarSetClasses);
+		ClassSet jarsetConParam = ch.getConstructorParams(this.cls, this.jarSetClasses);
 		filter(jarsetConParam);
 		// ---------------------------------------------------------------------------
 		
 		// --------------------------------------------------------------------
 		// 						Get method parameters
-		JarSet methodParams = ch.getMethodParams(this.cls, this.jarSetClasses);
+		ClassSet methodParams = ch.getMethodParams(this.cls, this.jarSetClasses);
 		filter(methodParams);
 		// --------------------------------------------------------------------
 		
 		// --------------------------------------------------------------------
 		// 						Get method return type
-		JarSet methodReturn = ch.getMethodReturn(this.cls, this.jarSetClasses);
+		ClassSet methodReturn = ch.getMethodReturn(this.cls, this.jarSetClasses);
 		filter(methodReturn);
 		// --------------------------------------------------------------------
 
@@ -80,7 +80,7 @@ public class Efferent
 		return cls;
 	}
 
-	private void filter(JarSet jarset)
+	private void filter(ClassSet jarset)
 	{
 		
 		if(jarset.size() > 0)
@@ -101,12 +101,12 @@ public class Efferent
 		
 	}
 	
-	public JarSet getJarSetDependencies() 
+	public ClassSet getJarSetDependencies() 
 	{
 		return jarSetDependencies;
 	}
 
-	public void setJarSetDependencies(JarSet jarSetDependencies)
+	public void setJarSetDependencies(ClassSet jarSetDependencies)
 	{
 		this.jarSetDependencies = jarSetDependencies;
 	}

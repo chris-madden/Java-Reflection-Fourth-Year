@@ -1,80 +1,18 @@
 package ie.gmit.sw.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.jar.JarEntry;
-import java.util.jar.JarInputStream;
-
-import ie.gmit.sw.controller.JarSet;
-import ie.gmit.sw.launch.Runner;
 
 public class ClassHandler
 {
 	
-	//private JarSet list;
-	
-	/*public JarSet getClassesFromJar(String nameOfJar) throws FileNotFoundException, IOException
+	// Get interfaces
+	public ClassSet getInterface(Class<?> cls) 
 	{
 		
-		   // List with classes from Jar file
-		   this.list = new JarSet();
-		   
-		   JarInputStream in  = new JarInputStream(new FileInputStream(new File(nameOfJar))); 
-			
-		   JarEntry next = in.getNextJarEntry(); 
-		   
-		   while(next != null)
-		   {
-			   
-			   if (next.getName().endsWith(".class")) 
-				{
-					
-					String name = next.getName().replaceAll("/", "\\.");
-					
-					name = name.replaceAll(".class", "");
-					
-					if (!name.contains("$")) 
-						name.substring(0, name.length() - ".class".length()); 
-					
-					Class<?> queryClass;
-					 
-					try {
-						
-						queryClass = Class.forName(name);
-						
-						list.add(queryClass);
-						 
-						new Runner(queryClass);
-						
-					} catch (ClassNotFoundException e) {
-						e.printStackTrace();
-					}
-					
-					// Store class name in a data structure
-					//System.out.println(name);
-					
-				}// End if 
-				
-				next = in.getNextJarEntry();
-			  
-		   }
-		
-		   in.close();
-		   
-		   return list;
-		   
-	}// End getClassesFromJar
-*/
-	public JarSet getInterface(Class<?> cls) 
-	{
-		
-		JarSet inFace = new JarSet();
+		ClassSet inFace = new ClassSet();
 		
 		Class<?> inFaceArray[] = cls.getInterfaces();
 		
@@ -84,9 +22,11 @@ public class ClassHandler
 		}
 		
 		return inFace;
-	}
+		
+	}// End getInterface
 
-	public Class<?> getSuperClass(Class<?> cls, JarSet jarSetClasses) 
+	// Get super class
+	public Class<?> getSuperClass(Class<?> cls, ClassSet jarSetClasses) 
 	{
 		
 		if(!cls.isInterface())
@@ -102,16 +42,19 @@ public class ClassHandler
 					return class1;
 					
 				}
-			}
+				
+			}// End for
 			
 		}
 		
 		return null;
-	}
+		
+	}// End getSuperClass
 	
-	public JarSet getFields(Class<?> cls, JarSet jarSetClasses)
+	// Get fields
+	public ClassSet getFields(Class<?> cls, ClassSet jarSetClasses)
 	{
-		JarSet jarsetFields = new JarSet();
+		ClassSet jarsetFields = new ClassSet();
 		
 		Field[] fields = cls.getDeclaredFields();
 		
@@ -132,17 +75,19 @@ public class ClassHandler
 					
 				}
 				
-			}
+			}// End inner for
 			
-		}
+		}// End outer for
 		
 		return jarsetFields;
-	}
+		
+	}// End getFields
 
-	public JarSet getConstructorParams(Class<?> cls, JarSet jarSetClasses)
+	// Get parameters from constructors
+	public ClassSet getConstructorParams(Class<?> cls, ClassSet jarSetClasses)
 	{
 		
-		JarSet jarsetParams = new JarSet();
+		ClassSet jarsetParams = new ClassSet();
 		
 		Constructor<?>[] cons = cls.getDeclaredConstructors();
 		
@@ -167,21 +112,23 @@ public class ClassHandler
 							
 						}
 						
-					}
+					}// End inner for
 					
 				}
 				
-			}
+			}// End outer for
 			
 		}
 		
 		return jarsetParams;
-	}
+		
+	}// End getConstructorParams
 	
-	public JarSet getMethodParams(Class<?> cls, JarSet jarSetClasses) 
+	// Get parameters from methods
+	public ClassSet getMethodParams(Class<?> cls, ClassSet jarSetClasses) 
 	{
 		
-		JarSet jarsetParams = new JarSet();
+		ClassSet jarsetParams = new ClassSet();
 		
 		Method[] method = cls.getDeclaredMethods();
 		
@@ -206,21 +153,23 @@ public class ClassHandler
 							
 						}
 						
-					}
+					}// End inner for
 					
 				}
 				
-			}
+			}// End outer for
 			
 		}
 		
 		return jarsetParams;
-	}
+		
+	}// End getMethodParams
 
-	public JarSet getMethodReturn(Class<?> cls, JarSet jarSetClasses)
+	// Get return type of methods
+	public ClassSet getMethodReturn(Class<?> cls, ClassSet jarSetClasses)
 	{
 		
-		JarSet jarsetReturn = new JarSet();
+		ClassSet jarsetReturn = new ClassSet();
 		
 		Method[] method = cls.getDeclaredMethods();
 		
@@ -239,11 +188,12 @@ public class ClassHandler
 					
 				}
 				
-			}
+			}// End for
 			
 		}
 		
 		return jarsetReturn;
-	}
+		
+	}// End getMethodReturn
 
 }// End class handler

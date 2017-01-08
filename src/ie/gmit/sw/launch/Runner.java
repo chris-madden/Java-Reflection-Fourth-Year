@@ -2,7 +2,7 @@ package ie.gmit.sw.launch;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import ie.gmit.sw.controller.JarSet;
+import ie.gmit.sw.controller.ClassSet;
 import ie.gmit.sw.controller.LoadJarClasses;
 import ie.gmit.sw.controller.Loadable;
 import ie.gmit.sw.view.UserView;
@@ -34,7 +34,7 @@ public class Runner
 	   // Program to an abstraction
 	   Loadable loadClasses = new LoadJarClasses();
 	   
-	   JarSet setOfClasses = new JarSet();
+	   ClassSet setOfClasses = new ClassSet();
 	   
 	   try {
 		     

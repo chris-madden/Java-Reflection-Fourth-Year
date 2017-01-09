@@ -39,7 +39,7 @@ public class UserView
 	private JFrame frame;
 	private JPanel jpanelButtons, jpanelTextArea, jpanelTable;
 	private JTextArea textArea;
-	private JButton runButton, loadDbButton;
+	private JButton runButton, loadDbButton, saveDbButton;
 	private JTable jtable, databaseTable;
 	private JScrollPane scrollPane, scrollPaneDB;
 	private DefaultTableModel model, dbModel; 
@@ -112,6 +112,12 @@ public class UserView
 	    // ======================================
 	    loadDbButton = new JButton("Load DB");
 		jpanelButtons.add(loadDbButton);
+		
+		// ======================================
+	    // Create save DB button and add to panel
+	    // ======================================
+	    saveDbButton = new JButton("Save to DB");
+		jpanelButtons.add(saveDbButton);
 		
 		// ============================
 		// Create jar information Label

@@ -86,6 +86,9 @@ public class Runner
 	   // When button is pressed save jar details to database
 	   ui.saveDbButtonPress();
 	   
+	   // When button is pressed delete all from database
+	   ui.deleteButtonPress();
+	   
    }// End main
    
 }// End class Runner

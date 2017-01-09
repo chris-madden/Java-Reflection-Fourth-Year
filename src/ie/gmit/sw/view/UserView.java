@@ -41,7 +41,7 @@ public class UserView
 	private JFrame frame;
 	private JPanel jpanelButtons, jpanelTextArea, jpanelTable;
 	private JTextArea textArea;
-	private JButton runButton, loadDbButton, saveDbButton;
+	private JButton runButton, loadDbButton, saveDbButton, deleteAllButton;
 	private JTable jtable, databaseTable;
 	private JScrollPane scrollPane, scrollPaneDB;
 	private DefaultTableModel model, dbModel; 
@@ -120,6 +120,12 @@ public class UserView
 	    // ======================================
 	    saveDbButton = new JButton("Save to DB");
 		jpanelButtons.add(saveDbButton);
+		
+		// ======================================
+	    // Create save DB button and add to panel
+	    // ======================================
+	    deleteAllButton = new JButton("Delete all");
+		jpanelButtons.add(deleteAllButton);
 		
 		// ============================
 		// Create jar information Label
@@ -251,8 +257,6 @@ public class UserView
 				
 				runButtonClick++;
 				
-				System.out.println("Run Button Pressed: " + runButtonClick);
-				
 			}// End method actionPerformed
 			
 		});// End addActionListener
@@ -320,6 +324,32 @@ public class UserView
 		});// End saveDbButton.addActionListener
 		
 	}// End method saveDbButtonPress
+	
+	public void deleteButtonPress()
+	{
+		
+		deleteAllButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				
+				// Get all records from database
+				ObjectSet<DatabaseRecord> record = dop.retrieveAll();
+				
+				// Retrieve database connection
+				ObjectContainer ob = dop.getDb();
+				
+				for(DatabaseRecord item : record)
+				{
+					
+					ob.delete(item);
+					
+				}// End for
+				
+			}// End actionPerformed
+			
+		});// End deleteAllButton.addActionListener
+		
+	}// End method deleteButtonPress
 	
 	// ==============
 	// Helper methods

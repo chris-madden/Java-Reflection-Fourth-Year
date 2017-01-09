@@ -36,6 +36,7 @@ public class UserView
 	private Object[][] tableData;
 	private List<Result> result;
 	private DatabaseOperations dop;
+	private int runButtonClick, saveButtonClick;
 	
 	private JFrame frame;
 	private JPanel jpanelButtons, jpanelTextArea, jpanelTable;
@@ -248,6 +249,10 @@ public class UserView
 					
 				}// End outer array
 				
+				runButtonClick++;
+				
+				System.out.println("Run Button Pressed: " + runButtonClick);
+				
 			}// End method actionPerformed
 			
 		});// End addActionListener
@@ -298,8 +303,17 @@ public class UserView
 			
 			public void actionPerformed(ActionEvent e) 
 			{
+			
+				// If the program has run the jar file 
+				// Can only save record once
+				if(runButtonClick == 1 && saveButtonClick < 1)
+				{
+					
+					saveToDb();
+					
+				}
 				
-				saveToDb();
+				saveButtonClick++;
 				
 			}// End method actionPerformed
 			

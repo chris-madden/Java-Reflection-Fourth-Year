@@ -2,9 +2,9 @@ package ie.gmit.sw.controller;
 
 import java.util.List;
 
-public class Afferent {
+public class Afferent implements Calculator{
 	
-	private ClassSet jarsetDependencies;
+	private ClassSet classSetDependencies;
 	private Class<?> cls;
 	private List<Efferent> listCE; 
 
@@ -20,22 +20,22 @@ public class Afferent {
 	public void calculate()
 	{
 		
-		this.jarsetDependencies = new ClassSet();
+		this.classSetDependencies = new ClassSet();
 		
 		for (int i = 0; i < listCE.size(); i++)
 		{
-			ClassSet jarSetD = listCE.get(i).getJarSetDependencies();
+			ClassSet classSetD = listCE.get(i).getJarSetDependencies();
 			
-			if(jarSetD.size() > 0)
+			if(classSetD.size() > 0)
 			{
 				
-				for (int j = 0; j < jarSetD.size(); j++)
+				for (int j = 0; j < classSetD.size(); j++)
 				{
 					
-					if(cls.equals(jarSetD.get(j)))
+					if(cls.equals(classSetD.get(j)))
 					{
 						
-						this.jarsetDependencies.add(listCE.get(i).getCls());
+						this.classSetDependencies.add(listCE.get(i).getCls());
 						
 					}
 					
@@ -48,7 +48,7 @@ public class Afferent {
 
 	public ClassSet getJarsetDependencies() 
 	{
-		return jarsetDependencies;
+		return classSetDependencies;
 	}
 
 	public Class<?> getCls()
@@ -58,7 +58,7 @@ public class Afferent {
 	
 	public double getResult() 
 	{
-		return (double)this.jarsetDependencies.size();
+		return (double)this.classSetDependencies.size();
 	}
 
 }// End class SAfferent

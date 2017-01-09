@@ -2,19 +2,19 @@ package ie.gmit.sw.controller;
 
 import ie.gmit.sw.controller.ClassSet;
 
-public class Efferent 
+public class Efferent implements Calculator 
 {
 	
-	private ClassSet jarSetDependencies;
-	private ClassSet jarSetClasses;
+	private ClassSet classSetDependencies;
+	private ClassSet classSetClasses;
 	private Class<?> cls;
 	private ClassHandler ch = new ClassHandler();
 	
-	public Efferent(Class<?> class1, ClassSet jarSet) 
+	public Efferent(Class<?> class1, ClassSet classSet) 
 	{
 		
 		this.cls = class1;
-		this.jarSetClasses = jarSet;
+		this.classSetClasses = classSet;
 		
 		calculate();
 		
@@ -23,7 +23,7 @@ public class Efferent
 	public void calculate()
 	{
 		
-		this.jarSetDependencies = new ClassSet();
+		this.classSetDependencies = new ClassSet();
 		
 		ClassSet inFace = ch.getInterface(this.cls);
 		
@@ -31,7 +31,7 @@ public class Efferent
 			
 			for (int i = 0; i < inFace.size(); i++) {
 				
-				this.jarSetDependencies.add(inFace.get(i));
+				this.classSetDependencies.add(inFace.get(i));
 				
 			}
 			
@@ -39,37 +39,37 @@ public class Efferent
 		
 		// -----------------------------------------------------------------
 		// 						Get superclass
-		Class<?> superCls = ch.getSuperClass(this.cls, this.jarSetClasses);
+		Class<?> superCls = ch.getSuperClass(this.cls, this.classSetClasses);
 		
 		if(superCls != null)
 		{
 			
-			this.jarSetDependencies.add(superCls);
+			this.classSetDependencies.add(superCls);
 			
 		}
 		// -----------------------------------------------------------------
 		
 		// -----------------------------------------------------------------
 		//						Get Fields
-		ClassSet jarSetFields = ch.getFields(this.cls, this.jarSetClasses);
+		ClassSet jarSetFields = ch.getFields(this.cls, this.classSetClasses);
 		filter(jarSetFields);
 		// -----------------------------------------------------------------
 		
 		// ---------------------------------------------------------------------------
 		// 						Get constructor parameters
-		ClassSet jarsetConParam = ch.getConstructorParams(this.cls, this.jarSetClasses);
+		ClassSet jarsetConParam = ch.getConstructorParams(this.cls, this.classSetClasses);
 		filter(jarsetConParam);
 		// ---------------------------------------------------------------------------
 		
 		// --------------------------------------------------------------------
 		// 						Get method parameters
-		ClassSet methodParams = ch.getMethodParams(this.cls, this.jarSetClasses);
+		ClassSet methodParams = ch.getMethodParams(this.cls, this.classSetClasses);
 		filter(methodParams);
 		// --------------------------------------------------------------------
 		
 		// --------------------------------------------------------------------
 		// 						Get method return type
-		ClassSet methodReturn = ch.getMethodReturn(this.cls, this.jarSetClasses);
+		ClassSet methodReturn = ch.getMethodReturn(this.cls, this.classSetClasses);
 		filter(methodReturn);
 		// --------------------------------------------------------------------
 
@@ -89,10 +89,10 @@ public class Efferent
 			for (int i = 0; i < jarset.size(); i++) 
 			{
 				
-				if(!jarSetDependencies.contains(jarset.get(i)))
+				if(!classSetDependencies.contains(jarset.get(i)))
 				{
 					
-					this.jarSetDependencies.add(jarset.get(i));
+					this.classSetDependencies.add(jarset.get(i));
 					
 				}
 				
@@ -103,17 +103,17 @@ public class Efferent
 	
 	public ClassSet getJarSetDependencies() 
 	{
-		return jarSetDependencies;
+		return classSetDependencies;
 	}
 
 	public void setJarSetDependencies(ClassSet jarSetDependencies)
 	{
-		this.jarSetDependencies = jarSetDependencies;
+		this.classSetDependencies = jarSetDependencies;
 	}
 	
 	public double getResult() 
 	{
-		return (double)jarSetDependencies.size();
+		return (double)classSetDependencies.size();
 	}
 		
 }// End class Efferent

@@ -11,17 +11,8 @@ import ie.gmit.sw.view.UserView;
 
 public class Runner 
 {
-	
-   private Class<?> c;
-   
-   public Runner(Class<?> c)
-   {
-	   
-       this.c = c;
 
-   }
-
-   public static void main(String args[])throws ClassNotFoundException 
+   public static void main(String args[]) throws ClassNotFoundException
    {
 	   
 	   if (args.length == 0) {
@@ -51,7 +42,7 @@ public class Runner
 		
 			e.printStackTrace();
 		
-	   }// End try catch
+	   }// End try/catch
 	   
 	   // ===========================
 	   // 2. Open database connection

@@ -7,8 +7,6 @@ import java.io.IOException;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
-import ie.gmit.sw.launch.Runner;
-
 /*
  * 
  *  This particular concrete class is part of the strategy pattern and is used to load classes 
@@ -63,7 +61,6 @@ public class LoadJarClasses implements Loadable
 						
 						list.add(queryClass);
 						 
-						new Runner(queryClass);
 						
 					} catch (ClassNotFoundException e) {
 						e.printStackTrace();

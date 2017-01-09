@@ -17,7 +17,6 @@ public class DatabaseOperations
 		
 	}
 
-	
 	public ObjectSet<DatabaseRecord> retrieveAll()
 	{
 		

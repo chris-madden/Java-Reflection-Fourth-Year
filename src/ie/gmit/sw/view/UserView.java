@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.Insets;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
@@ -299,8 +297,6 @@ public class UserView
 				
 				ObjectSet<DatabaseRecord> record = dop.retrieveAll();
 				
-				System.out.println("record.size(): " + record.size());
-				
 				// Create object array with the length of 4
 				Object[] row = new Object[dbColumnNames.length];
 				
@@ -352,7 +348,7 @@ public class UserView
 				saveButtonClick++;
 				
 				// Feedback for user
-				infoLabel.setText("New jar results save to database");
+				infoLabel.setText("New jar results saved to database");
 				
 			}// End method actionPerformed
 			
@@ -517,8 +513,6 @@ public class UserView
 		
 		// Initialize database record with meta data of jar file
 		DatabaseRecord record = sRecord.initializeRecord();
-		
-		System.out.println(record.getFullStability());
 		
 		// Retrieve database connection
 		ObjectContainer ob = dop.getDb();

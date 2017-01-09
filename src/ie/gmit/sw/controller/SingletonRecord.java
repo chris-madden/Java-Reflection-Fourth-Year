@@ -2,6 +2,15 @@ package ie.gmit.sw.controller;
 
 import ie.gmit.sw.model.DatabaseRecord;
 
+/*
+ * 
+ *  Using the Singleton pattern to keep track of the information needed to store data
+ *  about the jar file. It's used because the information needed is generated in two different parts
+ *  of the code and this pattern allowed the information to be stored when required without having to
+ *  alter code.
+ * 
+ */
+
 public class SingletonRecord 
 {
 	

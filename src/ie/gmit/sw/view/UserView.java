@@ -41,7 +41,7 @@ public class UserView
 	private JFrame frame;
 	private JPanel jpanelButtons, jpanelTextArea, jpanelTable;
 	private JTextArea textArea;
-	private JButton runButton, loadDbButton, saveDbButton, deleteAllButton;
+	private JButton runButton, loadDbButton, saveDbButton, deleteAllButton, clearDbTableButton;
 	private JTable jtable, databaseTable;
 	private JScrollPane scrollPane, scrollPaneDB;
 	private DefaultTableModel model, dbModel; 
@@ -95,13 +95,6 @@ public class UserView
 		
 		jpanelTable = new JPanel();
 		jpanelTable.setLayout(new BoxLayout(jpanelTable, BoxLayout.Y_AXIS));
-		
-		// ================
-		// Create text area
-		// ================
-	    /*textArea = new JTextArea(10, 10);
-	    textArea.setEditable(false);  
-	    jpanelTextArea.add(textArea);*/
 	   
 	    // ==================================
 	    // Create run button and add to panel
@@ -126,6 +119,19 @@ public class UserView
 	    // ======================================
 	    deleteAllButton = new JButton("Delete all");
 		jpanelButtons.add(deleteAllButton);
+		
+		// ======================================
+	    // Create save DB button and add to panel
+	    // ======================================
+		clearDbTableButton = new JButton("Clear DB Table");
+		jpanelButtons.add(clearDbTableButton);
+		
+		// ================
+		// Create text area
+		// ================
+	    textArea = new JTextArea();
+	    textArea.setEditable(false);  
+	    jpanelButtons.add(textArea);
 		
 		// ============================
 		// Create jar information Label
@@ -225,6 +231,10 @@ public class UserView
 		
 	}// End method buildInterface
 	
+	//  ==============
+	//  Button Methods
+	//  ==============
+	
 	// Populate the JTable when clicking run button
 	public void runButtonPress()
 	{
@@ -235,27 +245,34 @@ public class UserView
 			public void actionPerformed(ActionEvent e)
 			{
 				
-				// Create object array with the length of 4
-				Object[] row = new Object[columnNames.length];
-				
-				// Loop through table data array
-				for(int i = 0; i < tableData.length; i++)
+				if(runButtonClick == 0)
 				{
 					
-					for(int j = 0; j < columnNames.length; j++)
+					// Create object array with the length of 4
+					Object[] row = new Object[columnNames.length];
+					
+					// Loop through table data array
+					for(int i = 0; i < tableData.length; i++)
 					{
 						
-						// Store a row from table data into a single dimension array
-						row[j] = tableData[i][j];
+						for(int j = 0; j < columnNames.length; j++)
+						{
+							
+							// Store a row from table data into a single dimension array
+							row[j] = tableData[i][j];
+							
+						}// End inner for
 						
-					}// End inner for
+						// Add row to table
+						model.addRow(row);
+						
+					}// End outer array
 					
-					// Add row to table
-					model.addRow(row);
-					
-				}// End outer array
+				}// End if
 				
 				runButtonClick++;
+				
+				textArea.append("Getting results");
 				
 			}// End method actionPerformed
 			
@@ -273,9 +290,12 @@ public class UserView
 				
 				ObjectSet<DatabaseRecord> record = dop.retrieveAll();
 				
+				System.out.println("record.size(): " + record.size());
+				
 				// Create object array with the length of 4
 				Object[] row = new Object[dbColumnNames.length];
 				
+				// Populate database table
 				for(DatabaseRecord item : record)
 				{
 					
@@ -291,7 +311,7 @@ public class UserView
 					row[4] = tableItem4;
 					
 					dbModel.addRow(row);
-				
+
 				}// End inner for
 				
 			}// End method actionPerformed
@@ -350,6 +370,31 @@ public class UserView
 		});// End deleteAllButton.addActionListener
 		
 	}// End method deleteButtonPress
+	
+	public void clearDbTable()
+	{
+		
+		clearDbTableButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+				// Get the number of rows currently in the table
+				int numOfrows = dbModel.getRowCount();
+			
+				// If there are rows in the table
+				if(numOfrows > 0)
+				{
+					
+					dbModel.removeRow(0);
+					
+				}// End if
+					
+			}// End method actionPerformed
+			
+		});// End clearDbTableButton.addActionListener
+		
+	}// End method clearDbTable
 	
 	// ==============
 	// Helper methods

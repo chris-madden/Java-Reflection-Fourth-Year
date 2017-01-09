@@ -89,6 +89,9 @@ public class Runner
 	   // When button is pressed delete all from database
 	   ui.deleteButtonPress();
 	   
+	   // When button is pressed data in database table is removed
+	   ui.clearDbTable();
+	   
    }// End main
    
 }// End class Runner

@@ -3,7 +3,6 @@ package ie.gmit.sw.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Font;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,12 +18,14 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
+import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 
 import ie.gmit.sw.controller.ClassSet;
 import ie.gmit.sw.controller.DatabaseOperations;
 import ie.gmit.sw.controller.Measurement;
 import ie.gmit.sw.controller.Result;
+import ie.gmit.sw.controller.SingletonRecord;
 import ie.gmit.sw.model.DatabaseRecord;
 
 public class UserView
@@ -290,6 +291,22 @@ public class UserView
 		
 	}// End method loadDbButton()
 	
+	public void saveDbButtonPress()
+	{
+		
+		saveDbButton.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) 
+			{
+				
+				saveToDb();
+				
+			}// End method actionPerformed
+			
+		});// End saveDbButton.addActionListener
+		
+	}// End method saveDbButtonPress
+	
 	// ==============
 	// Helper methods
 	// ==============
@@ -311,6 +328,11 @@ public class UserView
 	private void populateTableArray()
 	{
 		
+		int numOfClasses = 0;
+		int numOfFullStability = 0;
+		int numOfUnstable = 0;
+		int numOfInbetween = 0;
+		
 		 // Initialize table array
 	    tableData = new Object[result.size()][columnNames.length]; 
 	   
@@ -327,6 +349,7 @@ public class UserView
 				{
 				
 					case 0: tableData[i][j] = instabilityResult.getCl().getSimpleName();
+							numOfClasses++;
 					break;
 					
 					case 1: tableData[i][j] = instabilityResult.getCe();
@@ -336,16 +359,63 @@ public class UserView
 					break;
 					
 					case 3: tableData[i][j] = instabilityResult.getI();
+					
+							if(instabilityResult.getI() == 0)
+							{
+								
+								numOfFullStability++;
+								
+							}
+							else if(instabilityResult.getI() == 1)
+							{
+								
+								numOfUnstable++;
+								
+							}
+							else
+							{
+								
+								numOfInbetween++;
+								
+							}
 					break;
 					
 					default:
 				
 				}// End switch 
 				
+				
 			}// End inner for 
 		   
 		}// End outer for
+	    
+	    
+	    // Set data for database record
+	    SingletonRecord sRecord = SingletonRecord.getInstance();
+	    sRecord.setNumOfClasses(numOfClasses);
+	    sRecord.setFullStability(numOfFullStability);
+	    sRecord.setFullUnstability(numOfUnstable);
+	    sRecord.setInbetweenStabilty(numOfInbetween);
 		
 	}// End method populateTableArray
+	
+	private void saveToDb()
+	{
+		
+		// Get SingletonRecord instance
+		SingletonRecord sRecord = SingletonRecord.getInstance();
+		
+		// Initialize database record with meta data of jar file
+		DatabaseRecord record = sRecord.initializeRecord();
+		
+		System.out.println(record.getFullStability());
+		
+		// Retrieve database connection
+		ObjectContainer ob = dop.getDb();
+				 
+		//Save to database
+		ob.store(record);
+		
+	}// End method saveToDb
 	
 }// End class UserView

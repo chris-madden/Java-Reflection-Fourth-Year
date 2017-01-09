@@ -20,14 +20,25 @@ public class LoadJarClasses implements Loadable
 {
 	
 	private ClassSet list;
+	private File jar;
 
 	public ClassSet load(String nameOfJar) throws FileNotFoundException, IOException 
 	{
 		
 		// List with classes from Jar file
 		   this.list = new ClassSet();
+		  
+		   // New file object
+		   jar = new File(nameOfJar);
 		   
-		   JarInputStream in  = new JarInputStream(new FileInputStream(new File(nameOfJar))); 
+		   // Pass in file
+		   JarInputStream in  = new JarInputStream(new FileInputStream(jar)); 
+		   
+		   // Get instance of SingletonRecord
+		   SingletonRecord sRecord = SingletonRecord.getInstance();
+		   
+		   // Set name of jar
+		   sRecord.setNameOfJar(jar.getName());
 			
 		   JarEntry next = in.getNextJarEntry(); 
 		   

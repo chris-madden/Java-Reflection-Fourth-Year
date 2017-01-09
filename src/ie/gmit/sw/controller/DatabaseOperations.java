@@ -27,4 +27,12 @@ public class DatabaseOperations
 		
 	}// End method retrieveAll
 
+	// ======
+	// Getter
+	// ======
+	public ObjectContainer getDb() 
+	{
+		return db;
+	}
+
 }// End class DatabaseOperations

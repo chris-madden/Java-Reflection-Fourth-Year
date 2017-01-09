@@ -67,11 +67,15 @@ public class Runner
 	   // 3. Build the user interface
 	   // ===========================
 	   
-	   // Pass set of classes to UserView and the opbject for the database
+	   // Pass set of classes to UserView and the object for the database
 	   UserView ui = new UserView(setOfClasses, dop);
 	   
 	   // builds the outer shell 
 	   ui.buildInterfaceShell();
+	   
+	   // ========================================
+	   // 4. Allow user to interact with interface
+	   // ========================================
 	  
 	   // when run button is pressed the table fields are populated
 	   ui.runButtonPress();
@@ -79,15 +83,8 @@ public class Runner
 	   // When button is pressed all records are loaded
 	   ui.loadDbButton();
 	   
-	   // ====================
-	   // Simple Database Code
-	   // ====================
-	   
-	   // Create new record
-	   //DatabaseRecord dbRecord = new DatabaseRecord("Test_2", 15, 5, 5, 5);
-	   
-	   // Save to database
-	   //db.store(dbRecord);
+	   // When button is pressed save jar details to database
+	   ui.saveDbButtonPress();
 	   
    }// End main
    

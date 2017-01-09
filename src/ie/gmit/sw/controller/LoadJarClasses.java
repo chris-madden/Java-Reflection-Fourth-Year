@@ -7,19 +7,28 @@ import java.io.IOException;
 import java.util.jar.JarEntry;
 import java.util.jar.JarInputStream;
 
-/*
+/**
  * 
  *  This particular concrete class is part of the strategy pattern and is used to load classes 
  *  from a jar file
  * 
  */
-
 public class LoadJarClasses implements Loadable 
 {
 	
 	private ClassSet list;
 	private File jar;
 
+	/**
+	 * 
+	 *  This method loads the files from a Jar and stores them 
+	 *  in a list. 
+	 *  The jar name is also stored into a record for later use.
+	 *  
+	 *  @param nameOfJar This is the jar file that is passed in as an argument to method main
+	 *  @return ClassSet A list of all the classes in the jar file is returned by the method
+	 * 
+	 */
 	public ClassSet load(String nameOfJar) throws FileNotFoundException, IOException 
 	{
 		

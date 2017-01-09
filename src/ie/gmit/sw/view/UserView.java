@@ -3,6 +3,8 @@ package ie.gmit.sw.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.Insets;
 import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,12 +42,11 @@ public class UserView
 	
 	private JFrame frame;
 	private JPanel jpanelButtons, jpanelTextArea, jpanelTable;
-	private JTextArea textArea;
 	private JButton runButton, loadDbButton, saveDbButton, deleteAllButton, clearDbTableButton;
 	private JTable jtable, databaseTable;
 	private JScrollPane scrollPane, scrollPaneDB;
 	private DefaultTableModel model, dbModel; 
-	private Label jarLabel, dbLabel;
+	private Label jarLabel, dbLabel, infoLabel;
 	
 	private ClassSet ClassSet;
 	
@@ -100,38 +101,45 @@ public class UserView
 	    // Create run button and add to panel
 	    // =================================
 	    runButton = new JButton("Run");
+	    runButton.setFont(new Font("Ubuntu Mono", Font.BOLD, 16));
 		jpanelButtons.add(runButton);
 		
 		// ======================================
 	    // Create load DB button and add to panel
 	    // ======================================
 	    loadDbButton = new JButton("Load DB");
+	    loadDbButton.setFont(new Font("Ubuntu Mono", Font.BOLD, 16));
 		jpanelButtons.add(loadDbButton);
 		
 		// ======================================
 	    // Create save DB button and add to panel
 	    // ======================================
 	    saveDbButton = new JButton("Save to DB");
+	    saveDbButton.setFont(new Font("Ubuntu Mono", Font.BOLD, 16));
 		jpanelButtons.add(saveDbButton);
 		
 		// ======================================
 	    // Create save DB button and add to panel
 	    // ======================================
 	    deleteAllButton = new JButton("Delete all");
+	    deleteAllButton.setFont(new Font("Ubuntu Mono", Font.BOLD, 16));
 		jpanelButtons.add(deleteAllButton);
 		
 		// ======================================
 	    // Create save DB button and add to panel
 	    // ======================================
 		clearDbTableButton = new JButton("Clear DB Table");
+		clearDbTableButton.setFont(new Font("Ubuntu Mono", Font.BOLD, 16));
 		jpanelButtons.add(clearDbTableButton);
 		
-		// ================
-		// Create text area
-		// ================
-	    textArea = new JTextArea();
-	    textArea.setEditable(false);  
-	    jpanelButtons.add(textArea);
+		// ============================
+		// Create jar information Label
+		// ============================
+		infoLabel = new Label();
+		infoLabel.setBackground(Color.WHITE);
+		infoLabel.setAlignment(Label.CENTER);
+		infoLabel.setFont(new Font("Ubuntu Mono", Font.BOLD, 18));
+		jpanelButtons.add(infoLabel);
 		
 		// ============================
 		// Create jar information Label
@@ -272,7 +280,8 @@ public class UserView
 				
 				runButtonClick++;
 				
-				textArea.append("Getting results");
+				// Feedback for user
+				infoLabel.setText("Jar Results");
 				
 			}// End method actionPerformed
 			
@@ -314,6 +323,9 @@ public class UserView
 
 				}// End inner for
 				
+				// Feedback for user
+				infoLabel.setText("Database records retrieved");
+				
 			}// End method actionPerformed
 			
 		});// End loadDbButton.addActionListener
@@ -338,6 +350,9 @@ public class UserView
 				}
 				
 				saveButtonClick++;
+				
+				// Feedback for user
+				infoLabel.setText("New jar results save to database");
 				
 			}// End method actionPerformed
 			
@@ -365,6 +380,9 @@ public class UserView
 					
 				}// End for
 				
+				// Feedback for user
+				infoLabel.setText("All records in database deleted");
+				
 			}// End actionPerformed
 			
 		});// End deleteAllButton.addActionListener
@@ -389,6 +407,9 @@ public class UserView
 					dbModel.removeRow(0);
 					
 				}// End if
+				
+				// Feedback for user
+				infoLabel.setText("1 row removed from database table");
 					
 			}// End method actionPerformed
 			

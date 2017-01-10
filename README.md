@@ -47,8 +47,35 @@ java -cp ./bin:./lib/people.jar:./lib/db4o.jar ie.gmit.sw.launch.Runner ./lib/pe
 
  The project maked use of multiple design patterns. Below, Each one used will be described and explained.
 
- ##### MVC #####
+ ##### MVC Pattern #####
  This pattern was used as the application had a GUI and a database. It made sense to divide up the code into this pattern as it's a very popular pattern for this type of application. The __view__ package contains the code for the GUI, the __model__ package contains the code for the datbase records and the __controller__  package contains the code that procesees data and passes it from the view to the controller and vice versa.
+
+ **Package Structure**
+
+ ```
+Project
+|---------------------------------|
+|----controller                   |
+|    |-- Afferent.java            |
+|    |-- Calculator.java          |
+|    |-- ClassHandler.java        |
+|    |-- ClassSet.java            |
+|    |-- DatabaseOperations.java  |
+|    |-- Efferent.java            |
+|    |-- Loadable.java            |
+|    |-- LoadJarClasses.java      |
+|    |-- Measurement.java         |
+|    |-- Result.java              |
+|    |-- SingletonRecord.java     |
+|                                 |
+|----model                        |
+|    |-- DatabaseRecord.java      |
+|                                 |
+|----view                         |
+|    |-- UserView.java            |
+|---------------------------------|
+
+```
 
  ##### Strategy Pattern #####
  This pattern is used to make it easy to extended the program. In this project it allows for reading jar files but it would be very easy to add the functionality to read files from other sources E.G From other zip archives. This is down to the fact that you are programming to an abstraction with this pattern and creating a new concrete class that extends the interface Loadable will enable you to easily create other methods of reading in classes.
@@ -88,4 +115,196 @@ java -cp ./bin:./lib/people.jar:./lib/db4o.jar ie.gmit.sw.launch.Runner ./lib/pe
 ```
 
  **Note** _The database connection should have been handled with the Singleton pattern but it had been too deeply encoded by the time this was realised_
+
+  ##### Observer Pattern #####
+  This pattern is used by the GUI and ita use can be seen when clicking buttons. The buttons ActionListener is activated when the button is clicked and the code connected to the button is run.
+
+  **Example Code**
+
+  ```Java
+
+    // When run button is pressed
+    runButton.addActionListener(new ActionListener() {
+
+        public void actionPerformed(ActionEvent e)
+        {
+            
+            if(runButtonClick == 0)
+            {
+                
+                // Create object array with the length of 4
+                Object[] row = new Object[columnNames.length];
+                
+                // Loop through table data array
+                for(int i = 0; i < tableData.length; i++)
+                {
+                    
+                    for(int j = 0; j < columnNames.length; j++)
+                    {
+                        
+                        // Store a row from table data into a single dimension array
+                        row[j] = tableData[i][j];
+                        
+                    }// End inner for
+                    
+                    // Add row to table
+                    model.addRow(row);
+                    
+                }// End outer array
+                
+            }// End if
+            
+            runButtonClick++;
+            
+            // Feedback for user
+            infoLabel.setText("Jar Results");
+            
+        }// End method actionPerformed
+        
+    });// End addActionListener
+
+  ```
+
+  ### Database
+
+ ##### DB4O #####
+
+ This project stores metadata about the jar and its files. The databsae used is DB4O and the jar file containing the API is included with the project in the lib folder. Information stored in single record includes:
+ 
+ * Jar file name
+ * Number of classes in the jar
+ * Number of fully stable classes
+ * Number of fully unstable classes 
+ * Number of classes that are neither fully unstable or fully unstable
+
+ **Example Code**
+
+ ```Java
+
+    // Method retrieves records from the database
+    public ObjectSet<DatabaseRecord> retrieveAll()
+	{
+		
+		// Get data from database and store in record
+		ObjectSet<DatabaseRecord> record = db.query(DatabaseRecord.class);
+		
+		return record;
+		
+    }
+
+ ```
+
+ ### Reflection API
+
+ This API was used to retrieve information about the classes in the jar file. It was used to find the following information:
+ 
+ * The fields in the class
+ * The parameters of any constructors 
+ * Whether the class has a superclass other than the Object class
+ * Whether the class has oe implements any interfaces
+ * The parameters of any methods the class has
+ * The method return types
+ 
+ Using this API meant that a classes afferent and efferent couplings could be determined and this enabled the program to find the classes Positional Instablilty score.
+
+ **Example Code**
+
+```Java
+
+    // Method checks for interfaces and stores them in a list
+    public ClassSet getInterface(Class<?> cls) 
+	{
+		
+        // A new list
+		ClassSet inFace = new ClassSet();
+		
+        // Get interfaces
+		Class<?> inFaceArray[] = cls.getInterfaces();
+		
+        // Add interfaces to list
+		for(Class<?> c : inFaceArray)
+		{
+			inFace.add(c);
+		}
+		
+		return inFace;
+		
+	}// End getInterface
+
+```
+
+### GUI
+
+The application has a Graphical User Interface (GUI) which displays intformation about the jar file to the user and allows the user to interact with the program. It constists of:
+
+* __Two tables__
+    * One for jar information which includes: 
+        * Class names
+        * Afferent couplings
+        * Efferent couplings
+        * Positional instablilty score
+    * One for displaying the information stored in the database, which includes:
+        * Jar name
+        * Number of classes in jar
+        * Number of fully stable classes
+        * Number of fully unstable classes
+        * Number of class that are between fully stable and fully unstable 
+
+* __Five buttons__
+    * Run the program
+    * Load data from database
+    * Save to database
+    * Delete all records in database
+    * Clear rows from database display table 
+
+* __Three labels__
+    * Label to provide feedback to user when interacting with buttons
+    * Labels to tell user which table is the jar table and which is the database table
+
+* __Colour coding table cells__
+    * The column for the positional stabilty whill highlight different colours depending on the score 
+        * Column turns __green__ if class is fully stable
+        * Column turns __red__ if class is fully unstable
+        * Column remains __white__ if class is in between these vaules
+
+
+**Example Code**
+
+```Java
+
+    // Create new JTable
+    jtable = new JTable(model){
+			   
+        private static final long serialVersionUID = 3344805599300020343L;
+
+        // Have to override the method prepareRenderer
+        public Component prepareRenderer(TableCellRenderer renderer, int row, int col) {
+            
+            Component comp = super.prepareRenderer(renderer, row, col);
+            
+            // Store value in cell
+            Object value = getModel().getValueAt(row, col);
+        
+            // Add color to cells depending on their stability
+            if (value.equals(Double.valueOf(1)) && col == 3)
+            {
+                comp.setBackground(Color.red);
+                
+            }
+            else if(value.equals(Double.valueOf(0)) && col == 3)
+            {
+                comp.setBackground(Color.green);
+                
+            } else 
+            {
+                comp.setBackground(Color.white);
+            }
+            
+            return comp;
+            
+        }// End prepareRenderer
+        
+    };
+
+```
 

@@ -27,9 +27,9 @@ This application is built using Java and will run on any machine or OS once it h
 
 The application can be downloaded from GitHub using the above link. You will be need to run it from the command line. It is recommended that you navigate to the root directory of the project. Here you can run the command that will start the application
 
- **Note** _you will need to have a jar file you want the application to run and you will need to be add it to the classpath_
+**Note** _you will need to have a jar file you want the application to run and you will need to be add it to the classpath_
 
- **Example command to run** 
+**Example command to run** 
 
  ```
     java -cp ./bin:./lib/people.jar:./lib/db4o.jar ie.gmit.sw.launch.Runner ./lib/people.jar
@@ -42,15 +42,15 @@ The application can be downloaded from GitHub using the above link. You will be 
  * The class to run is Runner.java and is found in the __ie.gmit.sw.launch__ package
  * The last argument passes the jar file into the application so __be sure to provide the path to the jar file you want to test__
 
- # Technologies used
+# Technologies used
 
- **Operating System:** Linux Mint 17.3 “Rosa” <br />
- **IDE:** Eclipse Neon 4.6.2 <br />
- **Software Version Control:** Git 1.9.1 <br />
- **Hosting Site:** GitHub <br />
- **Programming Language:** Java 8 <br />
- **UML Generator:** ObjectAid
- **Documentation:** JavaDocs
+**Operating System:** Linux Mint 17.3 “Rosa” <br />
+**IDE:** Eclipse Neon 4.6.2 <br />
+**Software Version Control:** Git 1.9.1 <br />
+**Hosting Site:** GitHub <br />
+**Programming Language:** Java 8 <br />
+**UML Generator:** ObjectAid
+**Documentation:** JavaDocs
 
  # Features
 

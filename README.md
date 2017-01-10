@@ -57,7 +57,7 @@ java -cp ./bin:./lib/people.jar:./lib/db4o.jar ie.gmit.sw.launch.Runner ./lib/pe
 
  The project maked use of multiple design patterns. Below, Each one used will be described and explained.
 
- ##### MVC Pattern #####
+ ##### MVC Pattern 
  This pattern was used as the application had a GUI and a database. It made sense to divide up the code into this pattern as it's a very popular pattern for this type of application. The __view__ package contains the code for the GUI, the __model__ package contains the code for the datbase records and the __controller__  package contains the code that procesees data and passes it from the view to the controller and vice versa.
 
  **Package Structure**
@@ -87,7 +87,7 @@ Project
 
 ```
 
- ##### Strategy Pattern #####
+ ##### Strategy Pattern 
  This pattern is used to make it easy to extended the program. In this project it allows for reading jar files but it would be very easy to add the functionality to read files from other sources E.G From other zip archives. This is down to the fact that you are programming to an abstraction with this pattern and creating a new concrete class that extends the interface Loadable will enable you to easily create other methods of reading in classes.
 
  **Example Code**
@@ -104,7 +104,7 @@ Project
 
  ```
 
- ##### Singleton Pattern #####
+ ##### Singleton Pattern 
  This pattern is used in the program as only one instance of a database record is needed per session. It's flexible enough to intialise fields of the database record in different parts of the project and when all data for the database record has been initialize it returns the record ready to be saved into the database. This pattern was able to solve a problem where data needed was found in two completely different parts of the code, it made the code to save a database record cleaner and easier to program.
 
 **Example Code**
@@ -126,7 +126,7 @@ Project
 
  **Note** _The database connection should have been handled with the Singleton pattern but it had been too deeply encoded by the time this was realised_
 
-  ##### Observer Pattern #####
+  ##### Observer Pattern 
   This pattern is used by the GUI and ita use can be seen when clicking buttons. The buttons ActionListener is activated when the button is clicked and the code connected to the button is run.
 
   **Example Code**
@@ -175,9 +175,9 @@ Project
 
   ```
 
-  ### Database
+### Database
 
- ##### DB4O #####
+##### DB4O 
 
  This project stores metadata about the jar and its files. The databsae used is DB4O and the jar file containing the API is included with the project in the lib folder. Information stored in single record includes:
  
@@ -320,16 +320,16 @@ The application has a Graphical User Interface (GUI) which displays intformation
 
 # References 
 
-##### Jar file #####
+##### Jar file 
 * The jar file _people.jar_ used for testing was created by Andrej Lavrinovic
 
-##### Reflection API #####
+##### Reflection API 
 * E-book: Java Reflection Tutorial The Ultimate Guide, Daniel Gutierrez Diez, 2014
 * Website: https://www.javacodegeeks.com/
 
-##### Java Swing API #####
+##### Java Swing API 
 * Book: Head First Java, Kathy Sierra and Bert Bates, 2005
 * Website: https://docs.oracle.com/javase/tutorial/uiswing/
 
-##### Design Patterns #####
+##### Design Patterns 
 * Book: Head First Design Patterns, Eric Freeman and Elisabeth Freeman with Kathy Sierra and Bert Bates, 2004

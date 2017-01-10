@@ -28,6 +28,11 @@ import ie.gmit.sw.controller.Result;
 import ie.gmit.sw.controller.SingletonRecord;
 import ie.gmit.sw.model.DatabaseRecord;
 
+/**
+ * 
+ * This class builds the user interface and handles user interaction.
+ *
+ */
 public class UserView
 {
 	
@@ -38,6 +43,9 @@ public class UserView
 	private DatabaseOperations dop;
 	private int runButtonClick, saveButtonClick;
 	
+	// ========================
+	// User interface variables
+	// ========================
 	private JFrame frame;
 	private JPanel jpanelButtons, jpanelTextArea, jpanelTable;
 	private JButton runButton, loadDbButton, saveDbButton, deleteAllButton, clearDbTableButton;
@@ -48,6 +56,13 @@ public class UserView
 	
 	private ClassSet ClassSet;
 	
+	/**
+	 * Constructor initializes a ClassSet type, initializes the database connection 
+	 * and populates the table array
+	 * 
+	 * @param ClassSetClasses A list of CLasses
+	 * @param dop A database connection
+	 */
 	public UserView(ClassSet ClassSetClasses, DatabaseOperations dop) 
 	{
 		
@@ -65,6 +80,9 @@ public class UserView
 		
 	}
 	
+	/**
+	 * Method to build user interface
+	 */
 	public void buildInterfaceShell()
 	{
 		
@@ -242,6 +260,9 @@ public class UserView
 	//  ==============
 	
 	// Populate the JTable when clicking run button
+	/**
+	 * Method handles user interaction with the run button 
+	 */
 	public void runButtonPress()
 	{
 		
@@ -288,6 +309,9 @@ public class UserView
 	}// End method runButton
 	
 	// Populate database table
+	/**
+	 * Method handles user interaction with the load database button 
+	 */
 	public void loadDbButton()
 	{
 		
@@ -328,6 +352,9 @@ public class UserView
 		
 	}// End method loadDbButton()
 	
+	/**
+	 * Method handles user interaction with the save to database button 
+	 */
 	public void saveDbButtonPress()
 	{
 		
@@ -356,6 +383,9 @@ public class UserView
 		
 	}// End method saveDbButtonPress
 	
+	/**
+	 * Method handles user interaction with the delete database records button
+	 */
 	public void deleteButtonPress()
 	{
 		
@@ -385,6 +415,9 @@ public class UserView
 		
 	}// End method deleteButtonPress
 	
+	/**
+	 * Method handles user interaction with the clear database table button
+	 */
 	public void clearDbTable()
 	{
 		
@@ -418,10 +451,16 @@ public class UserView
 	// ==============
 	
 	// Calculates dependencies within the ClassSet and returns a list of results
-	private List<Result> getResultList(ClassSet js)
+	/**
+	 * Method gets the results of class couplings and instability score
+	 * 
+	 * @param classSet Pass in a ClassSet
+	 * @return Returns a list of Results
+	 */
+	private List<Result> getResultList(ClassSet classSet)
 	{
 		
-		Measurement measure = new Measurement(js);
+		Measurement measure = new Measurement(classSet);
 	    measure.getCouplings();
 	    measure.calculateInstabilities();
 	    
@@ -431,6 +470,10 @@ public class UserView
 		
 	}// End method getResultList
 	
+	/**
+	 * Method populates the array for the JTable and collects data needed for
+	 * database records
+	 */
 	private void populateTableArray()
 	{
 		
@@ -505,6 +548,9 @@ public class UserView
 		
 	}// End method populateTableArray
 	
+	/**
+	 * Method stores records to database
+	 */
 	private void saveToDb()
 	{
 		

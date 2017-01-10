@@ -168,6 +168,7 @@ public class UserView
 		// =============
 		model = new DefaultTableModel(columnNames, 0);
 		
+		// Adapted from http://stackoverflow.com/questions/25080951/jtable-set-cell-color-at-specific-value
 		jtable = new JTable(model){
 			   
 			private static final long serialVersionUID = 3344805599300020343L;

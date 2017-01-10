@@ -41,6 +41,16 @@ java -cp ./bin:./lib/people.jar:./lib/db4o.jar ie.gmit.sw.launch.Runner ./lib/pe
  * The class to run is Runner.java and is found in the __ie.gmit.sw.launch__ package
  * The last argument passes the jar file into the application so __be sure to provide the path to the jar file you want to test__
 
+ # Technologies used
+
+ **Operating System:** Linux Mint 17.3 “Rosa” <br />
+ **IDE:** Eclipse Neon 4.6.2 <br />
+ **Software Version Control:** Git 1.9.1 <br />
+ **Hosting Site:** GitHub <br />
+ **Programming Language:** Java 8 <br />
+ **UML Generator:** ObjectAid
+ **Documentation:** JavaDocs
+
  # Features
 
  ### Design Patterns
@@ -308,3 +318,18 @@ The application has a Graphical User Interface (GUI) which displays intformation
 
 ```
 
+# References 
+
+##### Jar file #####
+* The jar file _people.jar_ used for testing was created by Andrej Lavrinovic
+
+##### Reflection API #####
+* E-book: Java Reflection Tutorial The Ultimate Guide, Daniel Gutierrez Diez, 2014
+* Website: https://www.javacodegeeks.com/
+
+##### Java Swing API #####
+* Book: Head First Java, Kathy Sierra and Bert Bates, 2005
+* Website: https://docs.oracle.com/javase/tutorial/uiswing/
+
+##### Design Patterns #####
+* Book: Head First Design Patterns, Eric Freeman and Elisabeth Freeman with Kathy Sierra and Bert Bates, 2004

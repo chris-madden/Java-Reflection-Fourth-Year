@@ -1,8 +1,13 @@
 package ie.gmit.sw.controller;
 
+/**
+ * 
+ * An interface to extract commonality from concrete classes.
+ *
+ */
 public interface Calculator
 {
 
-	void calculate();// End calculate
+	public void calculate();
 
 }

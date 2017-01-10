@@ -9,9 +9,21 @@ import ie.gmit.sw.controller.LoadJarClasses;
 import ie.gmit.sw.controller.Loadable;
 import ie.gmit.sw.view.UserView;
 
+/**
+ * 
+ * This class is used for executing the program. Provides an entry point for the
+ * jar file that will be read.
+ *
+ */
 public class Runner 
 {
 
+	/**
+	 * Method starts the application
+	 * 
+	 * @param args Pass in the jar file to be assessed
+	 * @throws ClassNotFoundException
+	 */
    public static void main(String args[]) throws ClassNotFoundException
    {
 	   

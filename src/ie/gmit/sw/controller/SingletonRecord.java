@@ -11,6 +11,11 @@ import ie.gmit.sw.model.DatabaseRecord;
  * 
  */
 
+/**
+ * 
+ * This class is used to collect information needed to store a record into the database
+ *
+ */
 public class SingletonRecord 
 {
 	
@@ -23,15 +28,27 @@ public class SingletonRecord
 	private int fullUnstability;
 	private int inbetweenStabilty;
 	
+	/**
+	 * Private empty constructor used to create a Singleton pattern
+	 */
 	private SingletonRecord(){};
 	
+	/**
+	 * Static method which returns a single instance of the class
+	 * 
+	 * @return Returns a SingleRecord type
+	 */
 	// Return single instance of SingletonRecord
 	public static SingletonRecord getInstance()
 	{
-		
 		return uniqueRecord;
 	}
 	
+	/**
+	 * Method to initialize a database record
+	 * 
+	 * @return Returns a DatabaseRecord 
+	 */
 	// Initialize record so it's ready to be saved
 	public DatabaseRecord initializeRecord()
 	{
@@ -46,38 +63,71 @@ public class SingletonRecord
 	// Setters
 	// =======
 	
+	/**
+	 * Method gets the number of inbetweenStabilty classes
+	 * 
+	 * @return Returns an integer 
+	 */
 	public int getInbetweenStabilty() 
 	{
 		return inbetweenStabilty;
 	}
 
+	/**
+	 * Method sets the number of inbetweenStabilty classes
+	 * 
+	 * @param inbetweenStabilty Pass in the number of inbetweenStabilty classes
+	 */
 	public void setInbetweenStabilty(int inbetweenStabilty)
 	{
 		this.inbetweenStabilty = inbetweenStabilty;
 	}
 	
+	/**
+	 * Method gets the name of jar file
+	 * 
+	 * @return Returns a string
+	 */
 	public String getNameOfJar()
 	{
-		
 		return this.nameOfJar;
-		
 	}
 
+	/**
+	 * Method sets the name of the jar
+	 * 
+	 * @param nameOfJar Pass in the name of a jar 
+	 */
 	public void setNameOfJar(String nameOfJar)
 	{
 		this.nameOfJar = nameOfJar;
 	}
 
+	/**
+	 * Method gets the number of classes in jar
+	 * 
+	 * @param numOfClasses Pass in integer of number of classes
+	 */
 	public void setNumOfClasses(int numOfClasses) 
 	{
 		this.numOfClasses = numOfClasses;
 	}
 
+	/**
+	 * Method gets the number of classes that are fully stable
+	 * 
+	 * @param fullStability Pass in integer of number of classes that are fully stable
+	 */
 	public void setFullStability(int fullStability)
 	{
 		this.fullStability = fullStability;
 	}
 
+	/**
+	 * Method gets the number of classes that are fully unstable
+	 * 
+	 * @param fullUnstability Pass in integer of number of classes that are fully unstable
+	 */
 	public void setFullUnstability(int fullUnstability) 
 	{
 		this.fullUnstability = fullUnstability;

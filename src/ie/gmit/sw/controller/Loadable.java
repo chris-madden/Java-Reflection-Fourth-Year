@@ -10,6 +10,12 @@ import java.io.IOException;
  * 
  */
 
+/**
+ * 
+ * Interface used as part of Strategy pattern. Class that implement this interface will be loading 
+ * classes from some source.
+ *
+ */
 public interface Loadable 
 {
 	

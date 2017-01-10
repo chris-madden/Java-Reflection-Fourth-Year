@@ -5,9 +5,20 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
+/**
+ * 
+ *  This class provides reflection API functionality. It consists of methods that retrieves information about classes.
+ *
+ */
 public class ClassHandler
 {
 	
+	/**
+	 * This method checks if the class implements any interfaces
+	 * 
+	 * @param cls A class is passed to the method
+	 * @return A list of interfaces is returned
+	 */
 	// Get interfaces
 	public ClassSet getInterface(Class<?> cls) 
 	{
@@ -25,8 +36,15 @@ public class ClassHandler
 		
 	}// End getInterface
 
+	/**
+	 * This method checks if a class has a superclass that isn't the class Object
+	 * 
+	 * @param cls A class is passed to the method
+	 * @param classSetClasses A ClassSet type is passed to the method
+	 * @return If a superclass is present then return that superclass. Otherwise return null.
+	 */
 	// Get super class
-	public Class<?> getSuperClass(Class<?> cls, ClassSet jarSetClasses) 
+	public Class<?> getSuperClass(Class<?> cls, ClassSet classSetClasses) 
 	{
 		
 		if(!cls.isInterface())
@@ -34,9 +52,9 @@ public class ClassHandler
 			
 			Class<?> class1 = cls.getSuperclass();
 			
-			for (int i = 0; i < jarSetClasses.size(); i++) 
+			for (int i = 0; i < classSetClasses.size(); i++) 
 			{
-				if(class1.getName().equals(jarSetClasses.get(i).getName()))
+				if(class1.getName().equals(classSetClasses.get(i).getName()))
 				{
 					
 					return class1;
@@ -45,16 +63,23 @@ public class ClassHandler
 				
 			}// End for
 			
-		}
+		}// End if
 		
 		return null;
 		
 	}// End getSuperClass
-	
+
+	/**
+	 * This method checks what fields the class has
+	 * 
+	 * @param cls A class is passed to the method
+	 * @param classSetClasses A ClassSet type is passed to the method
+	 * @return A ClassSet type is returned
+	 */
 	// Get fields
-	public ClassSet getFields(Class<?> cls, ClassSet jarSetClasses)
+	public ClassSet getFields(Class<?> cls, ClassSet classSetClasses)
 	{
-		ClassSet jarsetFields = new ClassSet();
+		ClassSet classSetFields = new ClassSet();
 		
 		Field[] fields = cls.getDeclaredFields();
 		
@@ -63,15 +88,15 @@ public class ClassHandler
 			
 			Type type = f.getType();
 			
-			for (int i = 0; i < jarSetClasses.size(); i++)
+			for (int i = 0; i < classSetClasses.size(); i++)
 			{
 				
-				if(type.getTypeName().equals(jarSetClasses.get(i).getName()))
+				if(type.getTypeName().equals(classSetClasses.get(i).getName()))
 				{
 					
-					Class<?> cField = jarSetClasses.get(i);
+					Class<?> cField = classSetClasses.get(i);
 					
-					jarsetFields.add(cField);
+					classSetFields.add(cField);
 					
 				}
 				
@@ -79,15 +104,22 @@ public class ClassHandler
 			
 		}// End outer for
 		
-		return jarsetFields;
+		return classSetFields;
 		
 	}// End getFields
 
+	/**
+	 * This method checks what parameters the constructor has
+	 * 
+	 * @param cls A class is passed to the method
+	 * @param classSetClasses ClassSet type is passed to the method
+	 * @return A ClassSet type is returned
+	 */
 	// Get parameters from constructors
-	public ClassSet getConstructorParams(Class<?> cls, ClassSet jarSetClasses)
+	public ClassSet getConstructorParams(Class<?> cls, ClassSet classSetClasses)
 	{
 		
-		ClassSet jarsetParams = new ClassSet();
+		ClassSet classSetParams = new ClassSet();
 		
 		Constructor<?>[] cons = cls.getDeclaredConstructors();
 		
@@ -105,10 +137,10 @@ public class ClassHandler
 					for (Class<?> item : class1)
 					{
 						
-						if(jarSetClasses.contains(item))
+						if(classSetClasses.contains(item))
 						{
 							
-							jarsetParams.add(item);
+							classSetParams.add(item);
 							
 						}
 						
@@ -120,15 +152,22 @@ public class ClassHandler
 			
 		}
 		
-		return jarsetParams;
+		return classSetParams;
 		
 	}// End getConstructorParams
 	
+	/**
+	 * This method checks what parameters the class methods have
+	 * 
+	 * @param cls A class is passed to the method
+	 * @param classSetClasses ClassSet type is passed to the method
+	 * @return A ClassSet type is returned
+	 */
 	// Get parameters from methods
-	public ClassSet getMethodParams(Class<?> cls, ClassSet jarSetClasses) 
+	public ClassSet getMethodParams(Class<?> cls, ClassSet classSetClasses) 
 	{
 		
-		ClassSet jarsetParams = new ClassSet();
+		ClassSet classSetParams = new ClassSet();
 		
 		Method[] method = cls.getDeclaredMethods();
 		
@@ -146,10 +185,10 @@ public class ClassHandler
 					for (Class<?> item : class1)
 					{
 						
-						if(jarSetClasses.contains(item))
+						if(classSetClasses.contains(item))
 						{
 							
-							jarsetParams.add(item);
+							classSetParams.add(item);
 							
 						}
 						
@@ -161,15 +200,22 @@ public class ClassHandler
 			
 		}
 		
-		return jarsetParams;
+		return classSetParams;
 		
 	}// End getMethodParams
 
+	/**
+	 * This method checks the return types of the class methods
+	 * 
+	 * @param cls A class is passed to the method
+	 * @param classSetClasses ClassSet type is passed to the method
+	 * @return A ClassSet type is returned
+	 */
 	// Get return type of methods
-	public ClassSet getMethodReturn(Class<?> cls, ClassSet jarSetClasses)
+	public ClassSet getMethodReturn(Class<?> cls, ClassSet classSetClasses)
 	{
 		
-		ClassSet jarsetReturn = new ClassSet();
+		ClassSet classSetReturn = new ClassSet();
 		
 		Method[] method = cls.getDeclaredMethods();
 		
@@ -181,18 +227,18 @@ public class ClassHandler
 				
 				Class<?> class1 = m.getReturnType();
 				
-				if(jarSetClasses.contains(class1))
+				if(classSetClasses.contains(class1))
 				{
 					
-					jarsetReturn.add(class1);
+					classSetReturn.add(class1);
 					
 				}
 				
 			}// End for
 			
-		}
+		}// End if
 		
-		return jarsetReturn;
+		return classSetReturn;
 		
 	}// End getMethodReturn
 

@@ -117,35 +117,30 @@ public class UserView
 	    // Create run button and add to panel
 	    // =================================
 	    runButton = new JButton("Run");
-	    runButton.setFont(new Font("Ubuntu Mono", Font.BOLD, 16));
 		jpanelButtons.add(runButton);
 		
 		// ======================================
 	    // Create load DB button and add to panel
 	    // ======================================
 	    loadDbButton = new JButton("Load DB");
-	    loadDbButton.setFont(new Font("Ubuntu Mono", Font.BOLD, 16));
 		jpanelButtons.add(loadDbButton);
 		
 		// ======================================
 	    // Create save DB button and add to panel
 	    // ======================================
 	    saveDbButton = new JButton("Save to DB");
-	    saveDbButton.setFont(new Font("Ubuntu Mono", Font.BOLD, 16));
 		jpanelButtons.add(saveDbButton);
 		
 		// ======================================
 	    // Create save DB button and add to panel
 	    // ======================================
 	    deleteAllButton = new JButton("Delete all");
-	    deleteAllButton.setFont(new Font("Ubuntu Mono", Font.BOLD, 16));
 		jpanelButtons.add(deleteAllButton);
 		
 		// ======================================
 	    // Create save DB button and add to panel
 	    // ======================================
 		clearDbTableButton = new JButton("Clear DB Table");
-		clearDbTableButton.setFont(new Font("Ubuntu Mono", Font.BOLD, 16));
 		jpanelButtons.add(clearDbTableButton);
 		
 		// ============================

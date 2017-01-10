@@ -32,9 +32,10 @@ The application can be downloaded from GitHub using the above link. You will be 
  **Example command to run** 
 
  ```
-java -cp ./bin:./lib/people.jar:./lib/db4o.jar ie.gmit.sw.launch.Runner ./lib/people.jar
+    java -cp ./bin:./lib/people.jar:./lib/db4o.jar ie.gmit.sw.launch.Runner ./lib/people.jar
 
  ```
+
  * __java__ is the command needed to run a java application
  * __-cp__ is an argument that will add the required jar files to the classpath. Add the bin folder and the db4o jar to the classpath as well as the jar file you want to test
  * The db4o jar is supplied to you in the lib folder as well as a test jar called __people.jar__ to get you started

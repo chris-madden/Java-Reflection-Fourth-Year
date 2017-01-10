@@ -20,6 +20,6 @@ public interface Loadable
 {
 	
 	// Returns ClassSet which is a list of Classes
-	public ClassSet load(String nameOfJar) throws FileNotFoundException, IOException;
+	public ClassSet load(String nameOfSource) throws FileNotFoundException, IOException;
 
 }

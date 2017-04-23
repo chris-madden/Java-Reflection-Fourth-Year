@@ -12,7 +12,7 @@
 
 This application tests the stabilty of classes by checking their dependencies and calculting their Positional Stability. This is done by finding the number of Afferent couplings (Ca) and Efferent couplings (Ce) in a class. Once these have been found, the class's Positional Stability (I) can be caluculated using the formula _I = Ce / Ca + Ce_. To find the dependencies in each class the Refection API is used. The application also shows the use different design patterns. Finally the application demonstates use of the Javax Swing API. When the application is run the user is shown a GUI in which they can interact with the project.
 
-### What does the appication run on?
+### What does the application run on?
 
 This application is built using Java and will run on any machine or OS once it has Java installed. It is recommended that your computer has Java 8 installed. 
 

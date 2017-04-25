@@ -49,7 +49,7 @@ The application can be downloaded from GitHub using the above link. You will be 
 **Software Version Control:** Git 1.9.1 <br />
 **Hosting Site:** GitHub <br />
 **Programming Language:** Java 8 <br />
-**UML Generator:** ObjectAid
+**UML Generator:** ObjectAid <br />
 **Documentation:** JavaDocs
 
 # Features
